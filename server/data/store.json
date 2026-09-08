@@ -1,0 +1,849 @@
+{
+  "members": [
+    {
+      "id": "m-head-1",
+      "name": "Swanand More",
+      "role": "Head",
+      "campus": "Kondhwa",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Morning 8:30 - 2:30",
+      "phone": "+91 9322100933"
+    },
+    {
+      "id": "m-head-2",
+      "name": "Pratham Hindocha",
+      "role": "Head",
+      "campus": "Bibwewadi",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Morning 8:30 - 2:30",
+      "phone": "+91 788-7447272"
+    },
+    {
+      "id": "m-head-3",
+      "name": "Varad Belsare",
+      "role": "Head",
+      "campus": "Bibwewadi",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Morning 8:30 - 2:30",
+      "phone": "+91 91129 44298"
+    },
+    {
+      "id": "m-head-4",
+      "name": "Harshal Shinde",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Morning 8:30 - 2:30",
+      "phone": "+91 8850183182"
+    },
+    {
+      "id": "m-head-5",
+      "name": "Kunal Pawar",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Morning 8:30 - 2:30",
+      "phone": "+91 8080564241"
+    },
+    {
+      "id": "m-coord-1",
+      "name": "Om Solaskar",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Full Day",
+      "phone": "+91 91589 00118"
+    },
+    {
+      "id": "m-coord-2",
+      "name": "Tanay Korwar",
+      "role": "Coordinator",
+      "campus": "Kondhwa",
+      "hasCamera": true,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "+91 98340 03094"
+    },
+    {
+      "id": "m-coord-3",
+      "name": "Sarang Kharbade",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Afternoon",
+      "phone": "+91 95030 03282"
+    },
+    {
+      "id": "m-coord-4",
+      "name": "Tanish Golande",
+      "role": "Head",
+      "campus": "Kondhwa",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Full Day",
+      "phone": "+91 99608 22607"
+    },
+    {
+      "id": "m-coord-5",
+      "name": "Tinesh Gharat",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Morning",
+      "phone": "+91 98221 00005"
+    },
+    {
+      "id": "m-vol-1",
+      "name": "Adwait Torne",
+      "role": "Coordinator",
+      "campus": "Kondhwa",
+      "hasCamera": true,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "+91 70200 74374"
+    },
+    {
+      "id": "m-vol-2",
+      "name": "Tanisha Gadad",
+      "role": "Coordinator",
+      "campus": "Kondhwa",
+      "hasCamera": true,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "+91 92266 88579"
+    },
+    {
+      "id": "m-vol-3",
+      "name": "Shravan Changediya",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Afternoon",
+      "phone": "+91 77578 96741"
+    },
+    {
+      "id": "m-vol-4",
+      "name": "Rohan Dhobale",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": true,
+      "work": "VIDEO",
+      "collegeTimings": "Morning",
+      "phone": "+91 80104 71706"
+    },
+    {
+      "id": "m-vol-5",
+      "name": "Ashish Hanmante",
+      "role": "Coordinator",
+      "campus": "Kondhwa",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "+91 94221 01306"
+    },
+    {
+      "id": "m-vol-6",
+      "name": "Manav Dantkale",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Afternoon",
+      "phone": "+91 88578 22264"
+    },
+    {
+      "id": "m-vol-7",
+      "name": "Atharva Bakale",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "VIDEO",
+      "collegeTimings": "Morning",
+      "phone": "+91 82620 11791"
+    },
+    {
+      "id": "m-vol-8",
+      "name": "Atharva Dharankar",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "+91 90116 30162"
+    },
+    {
+      "id": "m-vol-9",
+      "name": "Om Patil",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "EDIT",
+      "collegeTimings": "Flexible",
+      "phone": "+91 74984 96896"
+    },
+    {
+      "id": "m-vol-10",
+      "name": "Kartik Salunke",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "VIDEO",
+      "collegeTimings": "Morning",
+      "phone": "+91 88007 76337"
+    },
+    {
+      "id": "m-vol-11",
+      "name": "Nayan Prakale",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "VIDEO",
+      "collegeTimings": "Morning",
+      "phone": "+91 90496 11411"
+    },
+    {
+      "id": "m-vol-12",
+      "name": "Sanskar Sachin Babar",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "EDIT",
+      "collegeTimings": "Flexible",
+      "phone": "+91 90496 61710"
+    },
+    {
+      "id": "m-1788897569687",
+      "name": "Arnav Deshmukh",
+      "role": "Head",
+      "campus": "Bibwewadi",
+      "hasCamera": true,
+      "work": "PHOTO/VIDEO",
+      "collegeTimings": "Morning",
+      "phone": "91627 33771"
+    },
+    {
+      "id": "m-1788900794157",
+      "name": "Arrnav Pawar",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "98223 55322"
+    },
+    {
+      "id": "m-1788900819493",
+      "name": "Nikita",
+      "role": "Coordinator",
+      "campus": "Bibwewadi",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "832 918 2582"
+    },
+    {
+      "id": "m-1788900843784",
+      "name": "Trisha",
+      "role": "Coordinator",
+      "campus": "Kondhwa",
+      "hasCamera": false,
+      "work": "PHOTO",
+      "collegeTimings": "Morning",
+      "phone": "70204 12129"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt-1788899301711",
+      "srNo": 11,
+      "name": "FY CAP Round 4",
+      "contactPerson": "",
+      "emailReceived": true,
+      "communicationDetails": "",
+      "date": "2026-09-04",
+      "campus": "Kondhwa",
+      "assignedMemberIds": [
+        "m-vol-4",
+        "m-vol-5",
+        "m-vol-7",
+        "m-vol-1",
+        "m-1788897569687"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1SVL5AS2491Ny9Jao99RQzbwt2WLwAr-f?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Upcoming",
+      "notes": "",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-09-08T20:28:21.711Z"
+    },
+    {
+      "id": "evt-1788898677907",
+      "srNo": 10,
+      "name": "SIH",
+      "contactPerson": "",
+      "emailReceived": true,
+      "communicationDetails": "",
+      "date": "2026-09-08",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-4",
+        "m-coord-1",
+        "m-coord-3",
+        "m-vol-2",
+        "m-vol-6",
+        "m-vol-7",
+        "m-vol-8",
+        "m-vol-10",
+        "m-vol-11",
+        "m-1788900794157",
+        "m-1788900819493",
+        "m-1788900843784"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1WZWwIrxVz-2XCFNC3RyaHfqD0tY1P6CF?usp=sharing",
+      "driveLinkSubmitted": false,
+      "status": "Upcoming",
+      "notes": "",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-09-08T20:17:57.907Z"
+    },
+    {
+      "id": "evt-1",
+      "srNo": 1,
+      "name": "Student Teacher Interaction Photoshoots for Gurupoornima",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Official faculty email received",
+      "date": "2026-07-28",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-2",
+        "m-head-1"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1YL4RN9Dx4G3vWfeNCnYyR-aemTOvX_2F?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Guru Pournima portraits captured and delivered.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-07-27T10:00:00.000Z"
+    },
+    {
+      "id": "evt-2",
+      "srNo": 2,
+      "name": "Guru Pournima IT Department",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Official faculty email received",
+      "date": "2026-07-29",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-3"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1Meekblchtb16HYmz87hCjweHZ5ODJFs_?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "IT Department faculty felicitation.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-07-28T14:00:00.000Z"
+    },
+    {
+      "id": "evt-3",
+      "srNo": 3,
+      "name": "Friendship Day Shoot",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Official campus event notice",
+      "date": "2026-07-31",
+      "campus": "Kondhwa",
+      "assignedMemberIds": [
+        "m-head-1",
+        "m-coord-4"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1Khm_dxrFZOvpf1_lY86kVA-fZvcNVYJU?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Campus photography and reels captured.",
+      "createdBy": "Pratham Hindocha",
+      "createdAt": "2026-07-30T09:30:00.000Z"
+    },
+    {
+      "id": "evt-4",
+      "srNo": 4,
+      "name": "Mech Department Video Shoot",
+      "contactPerson": "Dr Sandeep S Kore",
+      "emailReceived": true,
+      "communicationDetails": "HOD approval letter and email",
+      "date": "2026-08-06",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-2",
+        "m-head-3"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1ktt12VVC5SWq6UJLc_fSvgrclaq9ujGb?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Mechanical department lab promotional video.",
+      "createdBy": "Varad Belsare",
+      "createdAt": "2026-08-05T11:00:00.000Z"
+    },
+    {
+      "id": "evt-5",
+      "srNo": 5,
+      "name": "IEEE EMBS Event",
+      "contactPerson": "Abhay Rajankar",
+      "emailReceived": true,
+      "communicationDetails": "IEEE faculty coordinator email",
+      "date": "2026-08-07",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-7",
+        "m-head-5",
+        "m-1788900819493",
+        "m-vol-5"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1zBQD-SWaYmJCZDLnmCfCLlvrU3GILxmq?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "National student conference coverage.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-08-06T16:20:00.000Z"
+    },
+    {
+      "id": "evt-6",
+      "srNo": 6,
+      "name": "Independence Day (Kondhwa Campus)",
+      "contactPerson": "Avishkar Aher",
+      "emailReceived": true,
+      "communicationDetails": "Student council coordination email",
+      "date": "2026-08-15",
+      "campus": "Kondhwa",
+      "assignedMemberIds": [
+        "m-head-4",
+        "m-coord-1",
+        "m-coord-2",
+        "m-coord-5"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1kiROdEVzz7kKknNKLcJTR_XeBqbbYk6V?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Flag hoisting and stage performances.",
+      "createdBy": "Harshal Shinde",
+      "createdAt": "2026-08-12T09:00:00.000Z"
+    },
+    {
+      "id": "evt-7",
+      "srNo": 7,
+      "name": "Independence Day (Bibwewadi Campus)",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Dean office invitation",
+      "date": "2026-08-15",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-2",
+        "m-coord-1",
+        "m-vol-4",
+        "m-coord-3",
+        "m-coord-2"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1kiROdEVzz7kKknNKLcJTR_XeBqbbYk6V?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Main parade and grand auditorium ceremony.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-08-12T09:15:00.000Z"
+    },
+    {
+      "id": "evt-8",
+      "srNo": 8,
+      "name": "Speakers Club Event",
+      "contactPerson": "Jashanpreet Sahni",
+      "emailReceived": true,
+      "communicationDetails": "Speakers Club secretary email",
+      "date": "2026-08-21",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-8"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1HRIeQfwh7oM-BVhHROvQ5yjsL4XdWI93?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Guest speaker speech and audience reaction shots.",
+      "createdBy": "Pratham Hindocha",
+      "createdAt": "2026-08-19T13:45:00.000Z"
+    },
+    {
+      "id": "evt-9",
+      "srNo": 9,
+      "name": "AIDS Department Event",
+      "contactPerson": "Dr. Vaishali Bhaviskar",
+      "emailReceived": true,
+      "communicationDetails": "HOD official email",
+      "date": "2026-08-31",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-3",
+        "m-head-1"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/12X7T_mzbMfq44aMlLKS8KLp4EsKs31hJ?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "AI and Data Science department lab inauguration.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-08-28T17:00:00.000Z"
+    }
+  ],
+  "activities": [
+    {
+      "id": "75ce18d4-7572-48ff-90cf-0f481fe63903",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Assigned Nikita to \"IEEE EMBS Event\"",
+      "timestamp": "2026-09-08T21:01:45.212Z"
+    },
+    {
+      "id": "7bd02e6e-ee04-4470-bcf0-35a83d7aaea6",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Assigned Kunal Pawar to \"IEEE EMBS Event\"",
+      "timestamp": "2026-09-08T21:01:08.012Z"
+    },
+    {
+      "id": "34d0d383-75ef-4a27-9bea-cf68b6271465",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Trisha\"",
+      "timestamp": "2026-09-08T20:55:15.211Z"
+    },
+    {
+      "id": "a4ca03c8-eaf6-4f39-8c66-8bbeb8f1d727",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Assigned Trisha to \"SIH\"",
+      "timestamp": "2026-09-08T20:54:55.325Z"
+    },
+    {
+      "id": "b27ed4bc-9124-49c9-b679-d1061749e40c",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Assigned Nikita to \"SIH\"",
+      "timestamp": "2026-09-08T20:54:51.222Z"
+    },
+    {
+      "id": "448cfbfa-51ce-4608-86bc-7539acee4fc2",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Assigned Arrnav Pawar to \"SIH\"",
+      "timestamp": "2026-09-08T20:54:30.768Z"
+    },
+    {
+      "id": "d317d175-c157-4b71-aadf-c0539f68c52d",
+      "headName": "Swanand More",
+      "action": "ADDED_MEMBER",
+      "details": "Added new Head: \"Trisha\"",
+      "timestamp": "2026-09-08T20:54:03.787Z"
+    },
+    {
+      "id": "bd887456-5a0f-4b31-a3ca-fbe3211a1968",
+      "headName": "Swanand More",
+      "action": "ADDED_MEMBER",
+      "details": "Added new Coordinator: \"Nikita\"",
+      "timestamp": "2026-09-08T20:53:39.495Z"
+    },
+    {
+      "id": "ab91c676-9861-4232-8e79-1f37f436f4ae",
+      "headName": "Swanand More",
+      "action": "ADDED_MEMBER",
+      "details": "Added new Coordinator: \"Arrnav Pawar\"",
+      "timestamp": "2026-09-08T20:53:14.163Z"
+    },
+    {
+      "id": "426d7f0b-5984-47d3-9f57-b169f5ea1b15",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Kunal Pawar\"",
+      "timestamp": "2026-09-08T20:52:25.656Z"
+    },
+    {
+      "id": "55b0960d-8b7f-44d6-af1e-e731beffbbce",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Harshal Shinde\"",
+      "timestamp": "2026-09-08T20:52:05.989Z"
+    },
+    {
+      "id": "b53ca0ca-cd12-4e0c-833d-f73e4e017d97",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Pratham Hindocha\"",
+      "timestamp": "2026-09-08T20:51:39.380Z"
+    },
+    {
+      "id": "206f7744-f50b-4f59-bc37-61a33095043f",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Arnav Deshmukh\"",
+      "timestamp": "2026-09-08T20:51:29.554Z"
+    },
+    {
+      "id": "e0515b01-27c5-4a33-952f-0decfdb7c34a",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Varad Belsare\"",
+      "timestamp": "2026-09-08T20:51:09.878Z"
+    },
+    {
+      "id": "9234b6bd-ff01-410a-b0d0-3c43fd24057c",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Tanish Golande\"",
+      "timestamp": "2026-09-08T20:51:00.120Z"
+    },
+    {
+      "id": "40b21d4e-ddfb-4ee6-bb11-ef84affd827a",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Swanand More\"",
+      "timestamp": "2026-09-08T20:49:25.899Z"
+    },
+    {
+      "id": "4c22b7d2-b812-48f8-aff3-3bb6e3b981f0",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Kunal Pawar\"",
+      "timestamp": "2026-09-08T20:49:05.712Z"
+    },
+    {
+      "id": "87695544-1614-49b0-83a2-d9f12512b39a",
+      "headName": "Swanand More",
+      "action": "DELETED_MEMBER",
+      "details": "Removed member: \"Tanish Golande\"",
+      "timestamp": "2026-09-08T20:48:42.955Z"
+    },
+    {
+      "id": "35149a92-ed1e-4b56-a288-455cfdd7f050",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Tanish Golande\"",
+      "timestamp": "2026-09-08T20:48:19.000Z"
+    },
+    {
+      "id": "8caebfef-323b-4436-9d35-089333e96563",
+      "headName": "Swanand More",
+      "action": "UPDATED_EVENT",
+      "details": "Updated Drive link for \"SIH\"",
+      "timestamp": "2026-09-08T20:41:12.226Z"
+    },
+    {
+      "id": "a97553dc-fe39-485f-9d05-acc2a07aafd7",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Assigned Adwait Torne to \"FY CAP Round 4\"",
+      "timestamp": "2026-09-08T20:29:52.169Z"
+    },
+    {
+      "id": "be1d427e-881d-4deb-926f-c187f4f84b60",
+      "headName": "Swanand More",
+      "action": "UPDATED_EVENT",
+      "details": "Updated Drive link for \"FY CAP Round 4\"",
+      "timestamp": "2026-09-08T20:29:25.942Z"
+    },
+    {
+      "id": "08c6470d-3809-4818-9c80-38cca4745cb9",
+      "headName": "Swanand More",
+      "action": "CREATED_EVENT",
+      "details": "Created event: \"FY CAP Round 4\" for 2026-09-04",
+      "timestamp": "2026-09-08T20:28:21.715Z"
+    },
+    {
+      "id": "9ead5970-d643-46f6-9de5-a1780b3796e2",
+      "headName": "Swanand More",
+      "action": "TOGGLE_DRIVE",
+      "details": "Drive link marked pending for \"SIH\"",
+      "timestamp": "2026-09-08T20:26:18.289Z"
+    },
+    {
+      "id": "69dab707-a6e4-4131-a194-506283ad96cd",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Removed Rohan Dhobale from \"Independence Day (Kondhwa Campus)\"",
+      "timestamp": "2026-09-08T20:25:52.136Z"
+    },
+    {
+      "id": "2e60bed7-e738-4c8e-8e9e-014d6499a8d3",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Removed Kunal Pawar from \"Independence Day (Kondhwa Campus)\"",
+      "timestamp": "2026-09-08T20:25:47.881Z"
+    },
+    {
+      "id": "313cfdd0-67a8-40b1-bf0a-38b279f97c9c",
+      "headName": "Swanand More",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Removed Tinesh Gharat from \"Independence Day (Bibwewadi Campus)\"",
+      "timestamp": "2026-09-08T20:25:35.789Z"
+    },
+    {
+      "id": "383179a9-0fb9-4c79-9f1a-d5ae422b1e8e",
+      "headName": "Swanand",
+      "action": "UPDATED_EVENT",
+      "details": "Updated Drive link for \"SIH\"",
+      "timestamp": "2026-09-08T20:25:09.667Z"
+    },
+    {
+      "id": "6dbf63c0-0543-4afb-bbbe-ff7bca31c56f",
+      "headName": "Swanand",
+      "action": "UPDATED_EVENT",
+      "details": "Updated Drive link for \"SIH\"",
+      "timestamp": "2026-09-08T20:25:09.664Z"
+    },
+    {
+      "id": "3ec2961a-ecfc-43dc-b3f8-96011dbf5c77",
+      "headName": "Swanand",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Removed Swanand More from \"SIH\"",
+      "timestamp": "2026-09-08T20:25:04.326Z"
+    },
+    {
+      "id": "516a958e-8598-4858-9fd3-5cab2a9edfda",
+      "headName": "Swanand",
+      "action": "UPDATED_ALLOTMENT",
+      "details": "Assigned Swanand More to \"SIH\"",
+      "timestamp": "2026-09-08T20:25:04.323Z"
+    },
+    {
+      "id": "ef04ad54-661c-41ef-b809-7f57cf77aa76",
+      "headName": "Swanand More",
+      "action": "TOGGLE_DRIVE",
+      "details": "Drive link submitted for \"SIH\"",
+      "timestamp": "2026-09-08T20:18:20.753Z"
+    },
+    {
+      "id": "9fedc2cd-6554-4e4e-9ca1-674a8f44b664",
+      "headName": "Swanand More",
+      "action": "CREATED_EVENT",
+      "details": "Created event: \"SIH\" for 2026-09-08",
+      "timestamp": "2026-09-08T20:17:57.908Z"
+    },
+    {
+      "id": "71852d90-a3ac-482b-8d95-24452fd81c08",
+      "headName": "Swanand More",
+      "action": "ADDED_MEMBER",
+      "details": "Added new Head: \"Tanish Golande\"",
+      "timestamp": "2026-09-08T19:59:15.170Z"
+    },
+    {
+      "id": "7b408a53-b17e-43eb-a9f0-3e8e6259c865",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Sanskar\"",
+      "timestamp": "2026-09-08T19:58:42.403Z"
+    },
+    {
+      "id": "470fb5f8-0dda-4963-8088-3e718aaa492d",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Nayan\"",
+      "timestamp": "2026-09-08T19:58:38.090Z"
+    },
+    {
+      "id": "8c63e2c3-de6e-492c-9bf9-a3d3f44b42e7",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Kartik\"",
+      "timestamp": "2026-09-08T19:58:30.343Z"
+    },
+    {
+      "id": "57011897-56e9-4e5f-8aab-e0ad4de69654",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Om Patil\"",
+      "timestamp": "2026-09-08T19:58:25.157Z"
+    },
+    {
+      "id": "78e01c5a-3a30-4220-9e30-b16d6b8f0d02",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Atharva Dharankar\"",
+      "timestamp": "2026-09-08T19:58:21.494Z"
+    },
+    {
+      "id": "316dc81d-abb9-4dae-a737-56e7342ad13c",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Atharva Bakale\"",
+      "timestamp": "2026-09-08T19:58:14.937Z"
+    },
+    {
+      "id": "85f88fa9-e970-48a1-bf7d-7bedf74f65c0",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Manav Dantakale\"",
+      "timestamp": "2026-09-08T19:58:09.194Z"
+    },
+    {
+      "id": "ca390119-5746-47d0-8fd6-9e4b911e1630",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Ashish Hanmante\"",
+      "timestamp": "2026-09-08T19:58:02.270Z"
+    },
+    {
+      "id": "7f967704-7020-403c-b3f0-c1cabc9a97d3",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Rohan Dhobale\"",
+      "timestamp": "2026-09-08T19:57:53.365Z"
+    },
+    {
+      "id": "501885db-54ca-4381-9162-0375dfb7326d",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Shravan Changediya\"",
+      "timestamp": "2026-09-08T19:57:44.403Z"
+    },
+    {
+      "id": "44503ded-cc25-4272-b500-01d5651aa4d8",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Tanisha Gadad\"",
+      "timestamp": "2026-09-08T19:57:37.984Z"
+    },
+    {
+      "id": "c352a85f-4dee-4865-b855-668c4b8077e5",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Adwait Torne\"",
+      "timestamp": "2026-09-08T19:57:32.529Z"
+    },
+    {
+      "id": "99b59f80-8d37-4f8f-8c29-56ba36fbf65e",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Kunal Pawar\"",
+      "timestamp": "2026-09-08T19:57:15.790Z"
+    },
+    {
+      "id": "e46df8cb-9c6e-4f75-8b6f-90081112deb5",
+      "headName": "Swanand More",
+      "action": "UPDATED_MEMBER",
+      "details": "Updated member: \"Harshal Shinde\"",
+      "timestamp": "2026-09-08T19:57:07.549Z"
+    },
+    {
+      "id": "1ea74417-e5cf-4f09-934c-ef8dece0fbd5",
+      "headName": "System",
+      "action": "INITIALIZED",
+      "details": "System initialized with official records (9 events, 22 members).",
+      "timestamp": "2026-09-08T19:49:15.048Z"
+    }
+  ]
+}

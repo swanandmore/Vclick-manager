@@ -1,0 +1,11 @@
+{
+  "name": "vclick-multimedia-prod",
+  "version": "1.0.0",
+  "description": "VCLICK Multimedia Productions - Real-time Fair Allotment & Event Sync Web App",
+  "main": "server/server.js",
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "server": "node server/server.js",
+    "start": "node server/server.js"
+  }
+}
