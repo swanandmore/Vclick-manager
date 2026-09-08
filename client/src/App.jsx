@@ -68,8 +68,11 @@ export default function App() {
     function connectWs() {
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const host = window.location.hostname;
-      const port = window.location.port === '3000' ? '5000' : (window.location.port || '5000');
-      const wsUrl = `${protocol}//${host}:${port}`;
+      // In cloud (Render/Railway), port is standard 80/443 so window.location.port is empty
+      const portPart = window.location.port === '3000' 
+        ? ':5000' 
+        : (window.location.port ? `:${window.location.port}` : '');
+      const wsUrl = `${protocol}//${host}${portPart}`;
 
       console.log('Connecting to WebSocket at:', wsUrl);
       const ws = new WebSocket(wsUrl);
@@ -148,7 +151,7 @@ export default function App() {
 
   // Initial HTTP fallback load
   useEffect(() => {
-    fetch('http://localhost:5000/api/state')
+    fetch(getApiUrl('/api/state'))
       .then(res => res.json())
       .then(data => {
         if (data.state) {
@@ -158,19 +161,7 @@ export default function App() {
           setMemberStats(data.memberStats || {});
         }
       })
-      .catch(() => {
-        fetch('/api/state')
-          .then(res => res.json())
-          .then(data => {
-            if (data.state) {
-              setEvents(data.state.events || []);
-              setMembers(data.state.members || []);
-              setActivities(data.state.activities || []);
-              setMemberStats(data.memberStats || {});
-            }
-          })
-          .catch(e => console.log('HTTP fetch deferred to WebSocket:', e));
-      });
+      .catch(e => console.log('HTTP fetch deferred to WebSocket:', e));
   }, []);
 
   const showToast = (message) => {
@@ -257,12 +248,25 @@ export default function App() {
   };
 
   const handleToggleDriveStatus = async (id) => {
+    // Optimistic UI update
+    setEvents(prev => prev.map(evt => {
+      if (evt.id !== id) return evt;
+      return {
+        ...evt,
+        driveLinkSubmitted: !evt.driveLinkSubmitted
+      };
+    }));
+
     try {
-      await fetch(getApiUrl(`/api/events/${id}/toggle-drive`), {
+      const res = await fetch(getApiUrl(`/api/events/${id}/toggle-drive`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ headName: currentHead })
       });
+      const data = await res.json();
+      if (data.state && data.state.events) {
+        setEvents(data.state.events);
+      }
     } catch (err) {
       console.error('Failed to toggle drive status:', err);
     }
