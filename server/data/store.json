@@ -1,4 +1,244 @@
 {
+  "events": [
+    {
+      "id": "evt-1788899301711",
+      "srNo": 11,
+      "name": "FY CAP Round 4",
+      "contactPerson": "",
+      "emailReceived": true,
+      "communicationDetails": "",
+      "date": "2026-09-04",
+      "campus": "Kondhwa",
+      "assignedMemberIds": [
+        "m-vol-4",
+        "m-vol-5",
+        "m-vol-7",
+        "m-vol-1",
+        "m-1788897569687"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1SVL5AS2491Ny9Jao99RQzbwt2WLwAr-f?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Upcoming",
+      "notes": "",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-09-08T20:28:21.711Z"
+    },
+    {
+      "id": "evt-1788898677907",
+      "srNo": 10,
+      "name": "SIH",
+      "contactPerson": "",
+      "emailReceived": true,
+      "communicationDetails": "",
+      "date": "2026-09-08",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-4",
+        "m-coord-1",
+        "m-coord-3",
+        "m-vol-2",
+        "m-vol-6",
+        "m-vol-7",
+        "m-vol-8",
+        "m-vol-10",
+        "m-vol-11",
+        "m-1788900794157",
+        "m-1788900819493",
+        "m-1788900843784"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1WZWwIrxVz-2XCFNC3RyaHfqD0tY1P6CF?usp=sharing",
+      "driveLinkSubmitted": false,
+      "status": "Upcoming",
+      "notes": "",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-09-08T20:17:57.907Z"
+    },
+    {
+      "id": "evt-1",
+      "srNo": 1,
+      "name": "Student Teacher Interaction Photoshoots for Gurupoornima",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Official faculty email received",
+      "date": "2026-07-28",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-2",
+        "m-head-1"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1YL4RN9Dx4G3vWfeNCnYyR-aemTOvX_2F?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Guru Pournima portraits captured and delivered.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-07-27T10:00:00.000Z"
+    },
+    {
+      "id": "evt-2",
+      "srNo": 2,
+      "name": "Guru Pournima IT Department",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Official faculty email received",
+      "date": "2026-07-29",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-3"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1Meekblchtb16HYmz87hCjweHZ5ODJFs_?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "IT Department faculty felicitation.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-07-28T14:00:00.000Z"
+    },
+    {
+      "id": "evt-3",
+      "srNo": 3,
+      "name": "Friendship Day Shoot",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Official campus event notice",
+      "date": "2026-07-31",
+      "campus": "Kondhwa",
+      "assignedMemberIds": [
+        "m-head-1",
+        "m-coord-4"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1Khm_dxrFZOvpf1_lY86kVA-fZvcNVYJU?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Campus photography and reels captured.",
+      "createdBy": "Pratham Hindocha",
+      "createdAt": "2026-07-30T09:30:00.000Z"
+    },
+    {
+      "id": "evt-4",
+      "srNo": 4,
+      "name": "Mech Department Video Shoot",
+      "contactPerson": "Dr Sandeep S Kore",
+      "emailReceived": true,
+      "communicationDetails": "HOD approval letter and email",
+      "date": "2026-08-06",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-head-2",
+        "m-head-3"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1ktt12VVC5SWq6UJLc_fSvgrclaq9ujGb?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Mechanical department lab promotional video.",
+      "createdBy": "Varad Belsare",
+      "createdAt": "2026-08-05T11:00:00.000Z"
+    },
+    {
+      "id": "evt-5",
+      "srNo": 5,
+      "name": "IEEE EMBS Event",
+      "contactPerson": "Abhay Rajankar",
+      "emailReceived": true,
+      "communicationDetails": "IEEE faculty coordinator email",
+      "date": "2026-08-07",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-7",
+        "m-head-5",
+        "m-1788900819493",
+        "m-vol-5"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1zBQD-SWaYmJCZDLnmCfCLlvrU3GILxmq?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "National student conference coverage.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-08-06T16:20:00.000Z"
+    },
+    {
+      "id": "evt-6",
+      "srNo": 6,
+      "name": "Independence Day (Kondhwa Campus)",
+      "contactPerson": "Avishkar Aher",
+      "emailReceived": true,
+      "communicationDetails": "Student council coordination email",
+      "date": "2026-08-15",
+      "campus": "Kondhwa",
+      "assignedMemberIds": [
+        "m-head-4",
+        "m-coord-1",
+        "m-coord-2",
+        "m-coord-5"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1kiROdEVzz7kKknNKLcJTR_XeBqbbYk6V?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Flag hoisting and stage performances.",
+      "createdBy": "Harshal Shinde",
+      "createdAt": "2026-08-12T09:00:00.000Z"
+    },
+    {
+      "id": "evt-7",
+      "srNo": 7,
+      "name": "Independence Day (Bibwewadi Campus)",
+      "contactPerson": "Prof. Riddhi Mirajkar",
+      "emailReceived": true,
+      "communicationDetails": "Dean office invitation",
+      "date": "2026-08-15",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-2",
+        "m-coord-1",
+        "m-vol-4",
+        "m-coord-3",
+        "m-coord-2"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1kiROdEVzz7kKknNKLcJTR_XeBqbbYk6V?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Main parade and grand auditorium ceremony.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-08-12T09:15:00.000Z"
+    },
+    {
+      "id": "evt-8",
+      "srNo": 8,
+      "name": "Speakers Club Event",
+      "contactPerson": "Jashanpreet Sahni",
+      "emailReceived": true,
+      "communicationDetails": "Speakers Club secretary email",
+      "date": "2026-08-21",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-8"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/1HRIeQfwh7oM-BVhHROvQ5yjsL4XdWI93?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "Guest speaker speech and audience reaction shots.",
+      "createdBy": "Pratham Hindocha",
+      "createdAt": "2026-08-19T13:45:00.000Z"
+    },
+    {
+      "id": "evt-9",
+      "srNo": 9,
+      "name": "AIDS Department Event",
+      "contactPerson": "Dr. Vaishali Bhaviskar",
+      "emailReceived": true,
+      "communicationDetails": "HOD official email",
+      "date": "2026-08-31",
+      "campus": "Bibwewadi",
+      "assignedMemberIds": [
+        "m-vol-3",
+        "m-head-1"
+      ],
+      "driveLink": "https://drive.google.com/drive/folders/12X7T_mzbMfq44aMlLKS8KLp4EsKs31hJ?usp=sharing",
+      "driveLinkSubmitted": true,
+      "status": "Completed",
+      "notes": "AI and Data Science department lab inauguration.",
+      "createdBy": "Swanand More",
+      "createdAt": "2026-08-28T17:00:00.000Z"
+    }
+  ],
   "members": [
     {
       "id": "m-head-1",
@@ -261,247 +501,14 @@
       "phone": "70204 12129"
     }
   ],
-  "events": [
-    {
-      "id": "evt-1788899301711",
-      "srNo": 11,
-      "name": "FY CAP Round 4",
-      "contactPerson": "",
-      "emailReceived": true,
-      "communicationDetails": "",
-      "date": "2026-09-04",
-      "campus": "Kondhwa",
-      "assignedMemberIds": [
-        "m-vol-4",
-        "m-vol-5",
-        "m-vol-7",
-        "m-vol-1",
-        "m-1788897569687"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1SVL5AS2491Ny9Jao99RQzbwt2WLwAr-f?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Upcoming",
-      "notes": "",
-      "createdBy": "Swanand More",
-      "createdAt": "2026-09-08T20:28:21.711Z"
-    },
-    {
-      "id": "evt-1788898677907",
-      "srNo": 10,
-      "name": "SIH",
-      "contactPerson": "",
-      "emailReceived": true,
-      "communicationDetails": "",
-      "date": "2026-09-08",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-head-4",
-        "m-coord-1",
-        "m-coord-3",
-        "m-vol-2",
-        "m-vol-6",
-        "m-vol-7",
-        "m-vol-8",
-        "m-vol-10",
-        "m-vol-11",
-        "m-1788900794157",
-        "m-1788900819493",
-        "m-1788900843784"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1WZWwIrxVz-2XCFNC3RyaHfqD0tY1P6CF?usp=sharing",
-      "driveLinkSubmitted": false,
-      "status": "Upcoming",
-      "notes": "",
-      "createdBy": "Swanand More",
-      "createdAt": "2026-09-08T20:17:57.907Z"
-    },
-    {
-      "id": "evt-1",
-      "srNo": 1,
-      "name": "Student Teacher Interaction Photoshoots for Gurupoornima",
-      "contactPerson": "Prof. Riddhi Mirajkar",
-      "emailReceived": true,
-      "communicationDetails": "Official faculty email received",
-      "date": "2026-07-28",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-head-2",
-        "m-head-1"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1YL4RN9Dx4G3vWfeNCnYyR-aemTOvX_2F?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "Guru Pournima portraits captured and delivered.",
-      "createdBy": "Swanand More",
-      "createdAt": "2026-07-27T10:00:00.000Z"
-    },
-    {
-      "id": "evt-2",
-      "srNo": 2,
-      "name": "Guru Pournima IT Department",
-      "contactPerson": "Prof. Riddhi Mirajkar",
-      "emailReceived": true,
-      "communicationDetails": "Official faculty email received",
-      "date": "2026-07-29",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-head-3"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1Meekblchtb16HYmz87hCjweHZ5ODJFs_?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "IT Department faculty felicitation.",
-      "createdBy": "Swanand More",
-      "createdAt": "2026-07-28T14:00:00.000Z"
-    },
-    {
-      "id": "evt-3",
-      "srNo": 3,
-      "name": "Friendship Day Shoot",
-      "contactPerson": "Prof. Riddhi Mirajkar",
-      "emailReceived": true,
-      "communicationDetails": "Official campus event notice",
-      "date": "2026-07-31",
-      "campus": "Kondhwa",
-      "assignedMemberIds": [
-        "m-head-1",
-        "m-coord-4"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1Khm_dxrFZOvpf1_lY86kVA-fZvcNVYJU?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "Campus photography and reels captured.",
-      "createdBy": "Pratham Hindocha",
-      "createdAt": "2026-07-30T09:30:00.000Z"
-    },
-    {
-      "id": "evt-4",
-      "srNo": 4,
-      "name": "Mech Department Video Shoot",
-      "contactPerson": "Dr Sandeep S Kore",
-      "emailReceived": true,
-      "communicationDetails": "HOD approval letter and email",
-      "date": "2026-08-06",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-head-2",
-        "m-head-3"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1ktt12VVC5SWq6UJLc_fSvgrclaq9ujGb?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "Mechanical department lab promotional video.",
-      "createdBy": "Varad Belsare",
-      "createdAt": "2026-08-05T11:00:00.000Z"
-    },
-    {
-      "id": "evt-5",
-      "srNo": 5,
-      "name": "IEEE EMBS Event",
-      "contactPerson": "Abhay Rajankar",
-      "emailReceived": true,
-      "communicationDetails": "IEEE faculty coordinator email",
-      "date": "2026-08-07",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-vol-7",
-        "m-head-5",
-        "m-1788900819493",
-        "m-vol-5"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1zBQD-SWaYmJCZDLnmCfCLlvrU3GILxmq?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "National student conference coverage.",
-      "createdBy": "Swanand More",
-      "createdAt": "2026-08-06T16:20:00.000Z"
-    },
-    {
-      "id": "evt-6",
-      "srNo": 6,
-      "name": "Independence Day (Kondhwa Campus)",
-      "contactPerson": "Avishkar Aher",
-      "emailReceived": true,
-      "communicationDetails": "Student council coordination email",
-      "date": "2026-08-15",
-      "campus": "Kondhwa",
-      "assignedMemberIds": [
-        "m-head-4",
-        "m-coord-1",
-        "m-coord-2",
-        "m-coord-5"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1kiROdEVzz7kKknNKLcJTR_XeBqbbYk6V?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "Flag hoisting and stage performances.",
-      "createdBy": "Harshal Shinde",
-      "createdAt": "2026-08-12T09:00:00.000Z"
-    },
-    {
-      "id": "evt-7",
-      "srNo": 7,
-      "name": "Independence Day (Bibwewadi Campus)",
-      "contactPerson": "Prof. Riddhi Mirajkar",
-      "emailReceived": true,
-      "communicationDetails": "Dean office invitation",
-      "date": "2026-08-15",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-vol-2",
-        "m-coord-1",
-        "m-vol-4",
-        "m-coord-3",
-        "m-coord-2"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1kiROdEVzz7kKknNKLcJTR_XeBqbbYk6V?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "Main parade and grand auditorium ceremony.",
-      "createdBy": "Swanand More",
-      "createdAt": "2026-08-12T09:15:00.000Z"
-    },
-    {
-      "id": "evt-8",
-      "srNo": 8,
-      "name": "Speakers Club Event",
-      "contactPerson": "Jashanpreet Sahni",
-      "emailReceived": true,
-      "communicationDetails": "Speakers Club secretary email",
-      "date": "2026-08-21",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-vol-8"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/1HRIeQfwh7oM-BVhHROvQ5yjsL4XdWI93?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "Guest speaker speech and audience reaction shots.",
-      "createdBy": "Pratham Hindocha",
-      "createdAt": "2026-08-19T13:45:00.000Z"
-    },
-    {
-      "id": "evt-9",
-      "srNo": 9,
-      "name": "AIDS Department Event",
-      "contactPerson": "Dr. Vaishali Bhaviskar",
-      "emailReceived": true,
-      "communicationDetails": "HOD official email",
-      "date": "2026-08-31",
-      "campus": "Bibwewadi",
-      "assignedMemberIds": [
-        "m-vol-3",
-        "m-head-1"
-      ],
-      "driveLink": "https://drive.google.com/drive/folders/12X7T_mzbMfq44aMlLKS8KLp4EsKs31hJ?usp=sharing",
-      "driveLinkSubmitted": true,
-      "status": "Completed",
-      "notes": "AI and Data Science department lab inauguration.",
-      "createdBy": "Swanand More",
-      "createdAt": "2026-08-28T17:00:00.000Z"
-    }
-  ],
   "activities": [
+    {
+      "id": "009ca77c-b4bb-41d5-b223-24f8931ac579",
+      "headName": "Swanand More",
+      "action": "RESTORED_DATABASE",
+      "details": "Restored database from JSON backup (11 events, 26 members)",
+      "timestamp": "2026-09-10T04:52:52.294Z"
+    },
     {
       "id": "89b71096-22ff-4966-9237-fdb037541f7b",
       "headName": "Swanand More",

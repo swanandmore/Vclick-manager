@@ -4,7 +4,7 @@
   "description": "VCLICK Multimedia Productions - Real-time Fair Allotment & Event Sync Web App",
   "main": "server/server.js",
   "scripts": {
-    "build": "cd client && npm install && npm run build",
+    "build": "cd server && npm install && cd ../client && npm install && npm run build",
     "server": "node server/server.js",
     "start": "node server/server.js"
   }

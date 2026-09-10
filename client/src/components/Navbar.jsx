@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Activity, 
   Users, 
   Calendar, 
   Scale, 
   Download, 
+  Upload,
+  Database,
   RotateCcw, 
   CheckCircle2, 
   UserCheck,
@@ -26,12 +28,16 @@ export default function Navbar({
   members = [],
   onResetData,
   onExportCsv,
+  dbInfo,
+  onDownloadBackup,
+  onRestoreBackup,
   theme,
   setTheme,
   onOpenWhatsAppModal
 }) {
   const [showHeadMenu, setShowHeadMenu] = useState(false);
   const [showPresenceMenu, setShowPresenceMenu] = useState(false);
+  const fileInputRef = useRef(null);
 
   // Dynamically derive head options from team members whose role is 'Head'
   const headMembers = members.filter(m => m.role === 'Head');
@@ -180,6 +186,22 @@ export default function Navbar({
               </span>
             </div>
 
+            {/* Database Status Indicator */}
+            <div 
+              title={dbInfo?.connected 
+                ? 'Persistent Cloud Database (MongoDB Atlas) Connected. Your data will never reset!' 
+                : 'Local File Storage. Connect MongoDB Atlas on Render to keep records permanent for 2+ years.'
+              }
+              className={`hidden lg:flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border ${
+                isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-zinc-100 border-zinc-200'
+              }`}
+            >
+              <Database className={`w-3.5 h-3.5 ${dbInfo?.connected ? 'text-emerald-500' : 'text-amber-500'}`} />
+              <span className={`text-[11px] font-semibold ${dbInfo?.connected ? 'text-emerald-500' : 'text-amber-500'}`}>
+                {dbInfo?.connected ? 'Cloud DB' : 'Local DB'}
+              </span>
+            </div>
+
             {/* Active Connected Heads Count */}
             <div className="relative">
               <button
@@ -279,6 +301,43 @@ export default function Navbar({
               }`}
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+
+            {/* Hidden JSON file input for Restore */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept=".json"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file && onRestoreBackup) {
+                  onRestoreBackup(file);
+                }
+                e.target.value = '';
+              }}
+            />
+
+            {/* Backup Database JSON */}
+            <button
+              onClick={onDownloadBackup}
+              title="Download Complete Database Backup (JSON)"
+              className={`p-2 rounded-xl border transition ${
+                isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-emerald-400 hover:bg-zinc-800' : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-emerald-600 hover:bg-zinc-200'
+              }`}
+            >
+              <Database className="w-4 h-4" />
+            </button>
+
+            {/* Restore Database JSON */}
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              title="Restore Database from JSON Backup file"
+              className={`p-2 rounded-xl border transition ${
+                isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-red-400 hover:bg-zinc-800' : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-red-500 hover:bg-zinc-200'
+              }`}
+            >
+              <Upload className="w-4 h-4" />
             </button>
 
             {/* Quick Export & Reset */}

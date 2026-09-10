@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const { MongoClient } = require('mongodb');
 const { initialMembers, initialEvents } = require('./seedData');
 
 const app = express();
@@ -12,8 +13,16 @@ const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
 const PORT = process.env.PORT || 5000;
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'store.json');
+
+// MongoDB Atlas Configuration
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'vclick_club';
+let mongoClient = null;
+let mongoDb = null;
+let stateCollection = null;
+let isMongoConnected = false;
 
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -30,7 +39,7 @@ function loadStore() {
     try {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
       state = JSON.parse(raw);
-      console.log('Database loaded. Events:', state.events.length, 'Members:', state.members.length);
+      console.log('Database loaded from disk. Events:', state.events.length, 'Members:', state.members.length);
       return;
     } catch (err) {
       console.error('Error reading store.json, re-seeding:', err);
@@ -54,14 +63,70 @@ function loadStore() {
 }
 
 function saveStore() {
+  // 1. Always save to local store.json
   try {
     fs.writeFileSync(DATA_FILE, JSON.stringify(state, null, 2), 'utf8');
   } catch (err) {
     console.error('Failed to save store.json:', err);
   }
+
+  // 2. If connected to MongoDB Atlas, persist immediately to cloud
+  if (isMongoConnected && stateCollection) {
+    stateCollection.updateOne(
+      { _id: 'vclick_primary_state' },
+      { $set: { state, updatedAt: new Date().toISOString() } },
+      { upsert: true }
+    ).catch(err => {
+      console.error('Failed to save state to MongoDB Atlas:', err);
+    });
+  }
 }
 
+// Initialize local store first as fast fallback
 loadStore();
+
+// Asynchronously connect to MongoDB Atlas if MONGODB_URI is provided
+async function initMongo() {
+  if (!MONGODB_URI) {
+    console.log('ℹ️ No MONGODB_URI detected. Using local store.json persistence.');
+    return;
+  }
+
+  try {
+    console.log('Connecting to MongoDB Atlas Cloud Database...');
+    mongoClient = new MongoClient(MONGODB_URI);
+    await mongoClient.connect();
+    mongoDb = mongoClient.db(MONGODB_DB_NAME);
+    stateCollection = mongoDb.collection('app_state');
+    isMongoConnected = true;
+    console.log('✅ Connected to MongoDB Atlas Cloud Database!');
+
+    // Check if cloud state document exists
+    const cloudDoc = await stateCollection.findOne({ _id: 'vclick_primary_state' });
+    if (cloudDoc && cloudDoc.state && Array.isArray(cloudDoc.state.events) && cloudDoc.state.events.length > 0) {
+      state = cloudDoc.state;
+      console.log(`✅ Loaded persistent state from MongoDB Atlas: ${state.events.length} events, ${state.members.length} members.`);
+      // Sync to local file cache
+      try {
+        fs.writeFileSync(DATA_FILE, JSON.stringify(state, null, 2), 'utf8');
+      } catch (_) {}
+    } else {
+      // First time on MongoDB: seed cloud database with current data
+      console.log('Initializing MongoDB Atlas with current club records...');
+      await stateCollection.updateOne(
+        { _id: 'vclick_primary_state' },
+        { $set: { _id: 'vclick_primary_state', state, updatedAt: new Date().toISOString() } },
+        { upsert: true }
+      );
+      console.log('✅ Baseline seeded to MongoDB Atlas.');
+    }
+  } catch (err) {
+    console.error('❌ Failed to connect to MongoDB Atlas, continuing with local store.json:', err.message);
+    isMongoConnected = false;
+  }
+}
+
+initMongo();
 
 function calculateEventStats() {
   const memberCounts = {};
@@ -159,8 +224,58 @@ app.get('/api/state', (req, res) => {
   res.json({
     state,
     memberStats: calculateEventStats(),
-    activeHeads: Array.from(activeClients.values())
+    activeHeads: Array.from(activeClients.values()),
+    dbInfo: {
+      type: isMongoConnected ? 'mongodb' : 'local',
+      status: isMongoConnected ? 'Connected to MongoDB Atlas' : 'Local File Storage',
+      connected: isMongoConnected
+    }
   });
+});
+
+// Download JSON Backup
+app.get('/api/backup', (req, res) => {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Disposition', `attachment; filename="vclick_backup_${timestamp}.json"`);
+  res.send(JSON.stringify({
+    version: '1.0',
+    exportedAt: new Date().toISOString(),
+    state,
+    memberStats: calculateEventStats()
+  }, null, 2));
+});
+
+// Restore State from JSON Backup
+app.post('/api/restore', (req, res) => {
+  const { restoredState, headName } = req.body;
+  if (!restoredState || !Array.isArray(restoredState.events) || !Array.isArray(restoredState.members)) {
+    return res.status(400).json({ error: 'Invalid backup file format' });
+  }
+
+  state = {
+    events: restoredState.events,
+    members: restoredState.members,
+    activities: Array.isArray(restoredState.activities) ? restoredState.activities : []
+  };
+
+  const activity = logActivity(
+    headName,
+    'RESTORED_DATABASE',
+    `Restored database from JSON backup (${state.events.length} events, ${state.members.length} members)`
+  );
+
+  saveStore();
+
+  broadcast({
+    type: 'RESET_COMPLETED',
+    state,
+    memberStats: calculateEventStats(),
+    activity,
+    message: `${headName || 'A head'} restored database from JSON backup`
+  });
+
+  res.json({ success: true, state, memberStats: calculateEventStats() });
 });
 
 // Create Event

@@ -15,6 +15,7 @@ export default function App() {
   const [memberStats, setMemberStats] = useState({});
   const [activities, setActivities] = useState([]);
   const [activeHeads, setActiveHeads] = useState([]);
+  const [dbInfo, setDbInfo] = useState({ type: 'local', status: 'Local File Storage', connected: false });
   const [isConnected, setIsConnected] = useState(false);
   const [activeTab, setActiveTab] = useState('events');
   
@@ -159,6 +160,9 @@ export default function App() {
           setMembers(data.state.members || []);
           setActivities(data.state.activities || []);
           setMemberStats(data.memberStats || {});
+        }
+        if (data.dbInfo) {
+          setDbInfo(data.dbInfo);
         }
       })
       .catch(e => console.log('HTTP fetch deferred to WebSocket:', e));
@@ -345,6 +349,39 @@ export default function App() {
     window.open(getApiUrl('/api/export/csv'), '_blank');
   };
 
+  const handleDownloadBackup = () => {
+    window.open(getApiUrl('/api/backup'), '_blank');
+  };
+
+  const handleRestoreBackup = async (file) => {
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      const backupState = parsed.state || parsed;
+      if (!backupState || !Array.isArray(backupState.events) || !Array.isArray(backupState.members)) {
+        alert('Invalid backup file. Must contain valid events and members.');
+        return;
+      }
+
+      if (!window.confirm(`Restore database from backup file? This will replace all current events and members with the ${backupState.events.length} events from this backup.`)) {
+        return;
+      }
+
+      const res = await fetch(getApiUrl('/api/restore'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ restoredState: backupState, headName: currentHead })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Database successfully restored from backup!');
+      }
+    } catch (err) {
+      console.error('Failed to restore backup:', err);
+      alert('Error restoring backup file. Please ensure it is a valid JSON file.');
+    }
+  };
+
   const handleOpenNewEventWithMember = (memberId) => {
     setEventToEdit({
       name: '',
@@ -383,6 +420,9 @@ export default function App() {
         members={members}
         onResetData={handleResetData}
         onExportCsv={handleExportCsv}
+        dbInfo={dbInfo}
+        onDownloadBackup={handleDownloadBackup}
+        onRestoreBackup={handleRestoreBackup}
         theme={theme}
         setTheme={setTheme}
         onOpenWhatsAppModal={() => setIsWhatsAppModalOpen(true)}
