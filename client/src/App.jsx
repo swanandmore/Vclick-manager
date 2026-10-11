@@ -9,6 +9,7 @@ import LiveActivityFeed from './components/LiveActivityFeed';
 import WhatsAppSyncModal from './components/WhatsAppSyncModal';
 import GradingDashboard from './components/GradingDashboard';
 import EventReviewModal from './components/EventReviewModal';
+import LoginModal from './components/LoginModal';
 import { Sparkles } from 'lucide-react';
 
 export default function App() {
@@ -19,8 +20,33 @@ export default function App() {
   const [activeHeads, setActiveHeads] = useState([]);
   const [dbInfo, setDbInfo] = useState({ type: 'local', status: 'Local File Storage', connected: false });
   const [isConnected, setIsConnected] = useState(false);
-  const [activeTab, setActiveTab] = useState('events');
   
+  // Persisted authenticated user session
+  const [authUser, setAuthUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('vclick_auth_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const [activeTab, setActiveTab] = useState(() => {
+    try {
+      const saved = localStorage.getItem('vclick_auth_user');
+      const user = saved ? JSON.parse(saved) : null;
+      if (user?.role === 'Coordinator') return 'grading';
+    } catch (e) {}
+    return 'events';
+  });
+
+  // Ensure Coordinators stay restricted on the grading tab
+  useEffect(() => {
+    if (authUser?.role === 'Coordinator' && activeTab !== 'grading') {
+      setActiveTab('grading');
+    }
+  }, [authUser, activeTab]);
+
   // Theme state: 'dark' or 'light'
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('vclick_theme') || 'dark';
@@ -42,6 +68,11 @@ export default function App() {
 
   // Persisted head profile switcher
   const [currentHead, setCurrentHead] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('vclick_auth_user');
+      const user = savedUser ? JSON.parse(savedUser) : null;
+      if (user?.role === 'Head') return user.name;
+    } catch (e) {}
     return localStorage.getItem('vclick_head') || 'Swanand More';
   });
 
@@ -339,6 +370,25 @@ export default function App() {
     }
   };
 
+  // Auth Handlers
+  const handleLoginSuccess = (user) => {
+    setAuthUser(user);
+    localStorage.setItem('vclick_auth_user', JSON.stringify(user));
+    if (user.role === 'Head') {
+      setCurrentHead(user.name);
+    }
+    if (user.role === 'Coordinator') {
+      setActiveTab('grading');
+    }
+    showToast(`Signed in as ${user.name} (${user.role})`);
+  };
+
+  const handleLogout = () => {
+    setAuthUser(null);
+    localStorage.removeItem('vclick_auth_user');
+    showToast('Signed out of VCLICK.');
+  };
+
   // Save Event Review & 5-Point Grade
   const handleSaveReview = async (eventId, memberId, reviewData) => {
     try {
@@ -350,7 +400,8 @@ export default function App() {
           isReviewed: reviewData.isReviewed,
           rating: reviewData.rating,
           feedback: reviewData.feedback,
-          headName: currentHead
+          headName: authUser?.name || currentHead,
+          userRole: authUser?.role || 'Head'
         })
       });
       const data = await res.json();
@@ -378,7 +429,8 @@ export default function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           initialGrade,
-          headName: currentHead
+          headName: currentHead,
+          userRole: authUser?.role || 'Head'
         })
       });
       const data = await res.json();
@@ -485,6 +537,8 @@ export default function App() {
         theme={theme}
         setTheme={setTheme}
         onOpenWhatsAppModal={() => setIsWhatsAppModalOpen(true)}
+        authUser={authUser}
+        onLogout={handleLogout}
       />
 
       {/* Real-time Toast Notifications */}
@@ -565,6 +619,7 @@ export default function App() {
             onSaveReview={handleSaveReview}
             onSaveInitialGrade={handleSaveInitialGrade}
             theme={theme}
+            authUser={authUser}
           />
         )}
 
@@ -631,6 +686,14 @@ export default function App() {
         allMembers={members}
         currentHead={currentHead}
         onSaveReview={handleSaveReview}
+      />
+
+      {/* Authentication Login Modal */}
+      <LoginModal
+        isOpen={!authUser}
+        members={members}
+        onLoginSuccess={handleLoginSuccess}
+        theme={theme}
       />
 
     </div>

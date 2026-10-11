@@ -16,7 +16,8 @@ import {
   MessageSquare,
   Star,
   Award,
-  SlidersHorizontal
+  SlidersHorizontal,
+  LogOut
 } from 'lucide-react';
 
 export default function Navbar({
@@ -36,7 +37,9 @@ export default function Navbar({
   onRestoreBackup,
   theme,
   setTheme,
-  onOpenWhatsAppModal
+  onOpenWhatsAppModal,
+  authUser,
+  onLogout
 }) {
   const [showHeadMenu, setShowHeadMenu] = useState(false);
   const [showPresenceMenu, setShowPresenceMenu] = useState(false);
@@ -50,6 +53,7 @@ export default function Navbar({
     : ['Swanand More', 'Pratham Hindocha', 'Varad Belsare', 'Co-Head 4', 'Co-Head 5'];
 
   const isDark = theme === 'dark';
+  const isCoord = authUser?.role === 'Coordinator';
 
   return (
     <header 
@@ -80,102 +84,113 @@ export default function Navbar({
           </div>
 
           {/* Center Navigation Tabs */}
-          <nav className={`hidden md:flex items-center space-x-1 p-1 rounded-xl border ${
-            isDark ? 'bg-zinc-900/90 border-zinc-800' : 'bg-zinc-100 border-zinc-200'
-          }`}>
-            <button
-              onClick={() => setActiveTab('events')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'events'
-                  ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                  : isDark 
-                  ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
-                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
-              }`}
-            >
-              <Calendar className="w-3.5 h-3.5" />
-              <span>Events</span>
-              <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-bold ${
-                activeTab === 'events' ? 'bg-white/20 text-white' : 'bg-zinc-800 text-zinc-300'
-              }`}>
-                {eventsCount}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setActiveTab('allotment')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'allotment'
-                  ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                  : isDark 
-                  ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
-                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
-              }`}
-            >
-              <Scale className="w-3.5 h-3.5" />
-              <span>Matrix</span>
-              {zeroEventsCount > 0 && (
-                <span className="text-[10px] px-1.5 py-0.2 rounded-md bg-amber-500/20 text-amber-500 font-bold border border-amber-500/30">
-                  {zeroEventsCount}
+          {isCoord ? (
+            <div className={`hidden md:flex items-center space-x-2 px-3.5 py-1.5 rounded-xl border ${
+              isDark ? 'bg-red-500/10 border-red-500/20 text-red-400' : 'bg-red-50 border-red-200 text-red-600'
+            }`}>
+              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <span className="text-xs font-bold uppercase tracking-wider">Volunteer Reviews & Grading</span>
+            </div>
+          ) : (
+            <nav className={`hidden md:flex items-center space-x-1 p-1 rounded-xl border ${
+              isDark ? 'bg-zinc-900/90 border-zinc-800' : 'bg-zinc-100 border-zinc-200'
+            }`}>
+              <button
+                onClick={() => setActiveTab('events')}
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === 'events'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                    : isDark 
+                    ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
+                }`}
+              >
+                <Calendar className="w-3.5 h-3.5" />
+                <span>Events</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-bold ${
+                  activeTab === 'events' ? 'bg-white/20 text-white' : 'bg-zinc-800 text-zinc-300'
+                }`}>
+                  {eventsCount}
                 </span>
-              )}
-            </button>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('team')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'team'
-                  ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                  : isDark 
-                  ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
-                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
-              }`}
-            >
-              <Users className="w-3.5 h-3.5" />
-              <span>Team</span>
-            </button>
+              <button
+                onClick={() => setActiveTab('allotment')}
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === 'allotment'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                    : isDark 
+                    ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
+                }`}
+              >
+                <Scale className="w-3.5 h-3.5" />
+                <span>Matrix</span>
+                {zeroEventsCount > 0 && (
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-md bg-amber-500/20 text-amber-500 font-bold border border-amber-500/30">
+                    {zeroEventsCount}
+                  </span>
+                )}
+              </button>
 
-            <button
-              onClick={() => setActiveTab('grading')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'grading'
-                  ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                  : isDark 
-                  ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
-                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
-              }`}
-            >
-              <Star className={`w-3.5 h-3.5 ${activeTab === 'grading' ? 'text-amber-300 fill-amber-300' : 'text-amber-400'}`} />
-              <span>Grading</span>
-            </button>
+              <button
+                onClick={() => setActiveTab('team')}
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === 'team'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                    : isDark 
+                    ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
+                }`}
+              >
+                <Users className="w-3.5 h-3.5" />
+                <span>Team</span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('activity')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                activeTab === 'activity'
-                  ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                  : isDark 
-                  ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
-                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
-              }`}
-            >
-              <Activity className="w-3.5 h-3.5" />
-              <span>Audit</span>
-            </button>
-          </nav>
+              <button
+                onClick={() => setActiveTab('grading')}
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === 'grading'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                    : isDark 
+                    ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
+                }`}
+              >
+                <Star className={`w-3.5 h-3.5 ${activeTab === 'grading' ? 'text-amber-300 fill-amber-300' : 'text-amber-400'}`} />
+                <span>Grading</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab('activity')}
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  activeTab === 'activity'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                    : isDark 
+                    ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
+                    : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
+                }`}
+              >
+                <Activity className="w-3.5 h-3.5" />
+                <span>Audit</span>
+              </button>
+            </nav>
+          )}
 
           {/* Right Action Items */}
           <div className="flex items-center space-x-2 sm:space-x-3">
             
-            {/* WhatsApp Import/Export Button */}
-            <button
-              onClick={onOpenWhatsAppModal}
-              title="Quick paste WhatsApp messages or generate WhatsApp broadcast"
-              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition"
-            >
-              <MessageSquare className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">WhatsApp Sync</span>
-            </button>
+            {/* WhatsApp Import/Export Button (Heads Only) */}
+            {!isCoord && (
+              <button
+                onClick={onOpenWhatsAppModal}
+                title="Quick paste WhatsApp messages or generate WhatsApp broadcast"
+                className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">WhatsApp Sync</span>
+              </button>
+            )}
 
             {/* Live Socket Status */}
             <div 
@@ -250,58 +265,72 @@ export default function Navbar({
               )}
             </div>
 
-            {/* Active Head Switcher */}
-            <div className="relative">
-              <button
-                onClick={() => setShowHeadMenu(!showHeadMenu)}
-                className={`flex items-center space-x-2 pl-2 pr-3 py-1 rounded-xl border transition ${
-                  isDark 
-                    ? 'bg-zinc-900 border-zinc-800 text-white hover:border-zinc-700' 
-                    : 'bg-zinc-100 border-zinc-300 text-zinc-900 hover:border-zinc-400'
-                }`}
-              >
-                <div className="w-6 h-6 rounded-lg bg-red-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm">
-                  {currentHead.charAt(0)}
+            {/* User Profile / Head Switcher */}
+            {isCoord ? (
+              <div className={`flex items-center space-x-2 pl-2 pr-3 py-1 rounded-xl border ${
+                isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-100' : 'bg-zinc-100 border-zinc-300 text-zinc-900'
+              }`}>
+                <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm">
+                  {(authUser?.name || 'C').charAt(0)}
                 </div>
-                <span className="text-xs font-bold max-w-[90px] truncate">
-                  {currentHead}
-                </span>
-                <ChevronDown className="w-3 h-3 opacity-60" />
-              </button>
-
-              {showHeadMenu && (
-                <div className={`absolute right-0 mt-2 w-56 rounded-xl border shadow-2xl py-2 z-50 ${
-                  isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-200' : 'bg-white border-zinc-200 text-zinc-800'
-                }`}>
-                  <div className="px-3 py-1 text-[11px] font-bold opacity-50 uppercase tracking-wider">
-                    Operating as Head:
+                <div className="flex flex-col text-left">
+                  <span className="text-xs font-bold max-w-[75px] sm:max-w-[100px] truncate">{authUser?.name || 'Coordinator'}</span>
+                  <span className="text-[9px] text-blue-400 font-bold uppercase tracking-wider">Coordinator</span>
+                </div>
+              </div>
+            ) : (
+              <div className="relative">
+                <button
+                  onClick={() => setShowHeadMenu(!showHeadMenu)}
+                  className={`flex items-center space-x-2 pl-2 pr-3 py-1 rounded-xl border transition ${
+                    isDark 
+                      ? 'bg-zinc-900 border-zinc-800 text-white hover:border-zinc-700' 
+                      : 'bg-zinc-100 border-zinc-300 text-zinc-900 hover:border-zinc-400'
+                  }`}
+                >
+                  <div className="w-6 h-6 rounded-lg bg-red-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm">
+                    {currentHead.charAt(0)}
                   </div>
-                  <p className="px-3 pb-2 text-[10px] opacity-60 leading-tight">
-                    Select your Head profile for audit logs:
-                  </p>
-                  {headOptions.map((name) => (
-                    <button
-                      key={name}
-                      onClick={() => {
-                        setCurrentHead(name);
-                        setShowHeadMenu(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between transition ${
-                        name === currentHead 
-                          ? 'text-red-500 font-bold bg-red-500/10' 
-                          : isDark ? 'hover:bg-zinc-800' : 'hover:bg-zinc-100'
-                      }`}
-                    >
-                      <span className="flex items-center space-x-2">
-                        <UserCheck className="w-3.5 h-3.5 opacity-60" />
-                        <span>{name}</span>
-                      </span>
-                      {name === currentHead && <CheckCircle2 className="w-3.5 h-3.5 text-red-500" />}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+                  <span className="text-xs font-bold max-w-[90px] truncate">
+                    {currentHead}
+                  </span>
+                  <ChevronDown className="w-3 h-3 opacity-60" />
+                </button>
+
+                {showHeadMenu && (
+                  <div className={`absolute right-0 mt-2 w-56 rounded-xl border shadow-2xl py-2 z-50 ${
+                    isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-200' : 'bg-white border-zinc-200 text-zinc-800'
+                  }`}>
+                    <div className="px-3 py-1 text-[11px] font-bold opacity-50 uppercase tracking-wider">
+                      Operating as Head:
+                    </div>
+                    <p className="px-3 pb-2 text-[10px] opacity-60 leading-tight">
+                      Select your Head profile for audit logs:
+                    </p>
+                    {headOptions.map((name) => (
+                      <button
+                        key={name}
+                        onClick={() => {
+                          setCurrentHead(name);
+                          setShowHeadMenu(false);
+                        }}
+                        className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between transition ${
+                          name === currentHead 
+                            ? 'text-red-500 font-bold bg-red-500/10' 
+                            : isDark ? 'hover:bg-zinc-800' : 'hover:bg-zinc-100'
+                        }`}
+                      >
+                        <span className="flex items-center space-x-2">
+                          <UserCheck className="w-3.5 h-3.5 opacity-60" />
+                          <span>{name}</span>
+                        </span>
+                        {name === currentHead && <CheckCircle2 className="w-3.5 h-3.5 text-red-500" />}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Theme Toggle Button */}
             <button
@@ -331,21 +360,22 @@ export default function Navbar({
               }}
             />
 
-            {/* Tools & Database Dropdown Menu */}
-            <div className="relative">
-              <button
-                onClick={() => setShowToolsMenu(!showToolsMenu)}
-                title="Database backup, CSV export, and system tools"
-                className={`p-2 rounded-xl border transition flex items-center justify-center ${
-                  showToolsMenu
-                    ? 'bg-red-600 text-white border-red-600'
-                    : isDark 
-                    ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800' 
-                    : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-200'
-                }`}
-              >
-                <SlidersHorizontal className="w-4 h-4" />
-              </button>
+            {/* Tools & Database Dropdown Menu (Heads Only) */}
+            {!isCoord && (
+              <div className="relative">
+                <button
+                  onClick={() => setShowToolsMenu(!showToolsMenu)}
+                  title="Database backup, CSV export, and system tools"
+                  className={`p-2 rounded-xl border transition flex items-center justify-center ${
+                    showToolsMenu
+                      ? 'bg-red-600 text-white border-red-600'
+                      : isDark 
+                      ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800' 
+                      : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-200'
+                  }`}
+                >
+                  <SlidersHorizontal className="w-4 h-4" />
+                </button>
 
               {showToolsMenu && (
                 <div className={`absolute right-0 mt-2 w-56 rounded-2xl border shadow-2xl p-2 z-50 space-y-1 ${
@@ -409,60 +439,83 @@ export default function Navbar({
                 </div>
               )}
             </div>
+            )}
+
+            {/* Logout Button */}
+            {onLogout && (
+              <button
+                onClick={onLogout}
+                title={`Sign out (${authUser?.name || 'User'})`}
+                className={`p-2 rounded-xl border transition flex items-center justify-center text-zinc-400 hover:text-red-400 ${
+                  isDark ? 'bg-zinc-900 border-zinc-800 hover:bg-zinc-800' : 'bg-zinc-100 border-zinc-200 hover:bg-zinc-200'
+                }`}
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            )}
 
           </div>
         </div>
 
         {/* Mobile Sub-navigation */}
-        <div className={`md:hidden flex items-center justify-around py-2 border-t ${
-          isDark ? 'border-zinc-800/80 text-zinc-400' : 'border-zinc-200 text-zinc-600'
-        }`}>
-          <button
-            onClick={() => setActiveTab('events')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
-              activeTab === 'events' ? 'text-red-500 font-bold' : ''
-            }`}
-          >
-            <Calendar className="w-4 h-4 mb-0.5" />
-            Events ({eventsCount})
-          </button>
-          <button
-            onClick={() => setActiveTab('allotment')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
-              activeTab === 'allotment' ? 'text-red-500 font-bold' : ''
-            }`}
-          >
-            <Scale className="w-4 h-4 mb-0.5" />
-            Matrix
-          </button>
-          <button
-            onClick={() => setActiveTab('team')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
-              activeTab === 'team' ? 'text-red-500 font-bold' : ''
-            }`}
-          >
-            <Users className="w-4 h-4 mb-0.5" />
-            Team
-          </button>
-          <button
-            onClick={() => setActiveTab('grading')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
-              activeTab === 'grading' ? 'text-red-500 font-bold' : ''
-            }`}
-          >
-            <Star className="w-4 h-4 mb-0.5 text-amber-400" />
-            Grading
-          </button>
-          <button
-            onClick={() => setActiveTab('activity')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
-              activeTab === 'activity' ? 'text-red-500 font-bold' : ''
-            }`}
-          >
-            <Activity className="w-4 h-4 mb-0.5" />
-            Audit
-          </button>
-        </div>
+        {isCoord ? (
+          <div className={`md:hidden flex items-center justify-center py-2.5 px-4 border-t text-xs font-bold ${
+            isDark ? 'border-zinc-800/80 bg-zinc-950 text-red-400' : 'border-zinc-200 bg-white text-red-600'
+          }`}>
+            <Star className="w-4 h-4 mr-2 text-amber-400 fill-amber-400" />
+            <span>Volunteer Reviews & Grading Portal</span>
+          </div>
+        ) : (
+          <div className={`md:hidden flex items-center justify-around py-2 border-t ${
+            isDark ? 'border-zinc-800/80 text-zinc-400' : 'border-zinc-200 text-zinc-600'
+          }`}>
+            <button
+              onClick={() => setActiveTab('events')}
+              className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
+                activeTab === 'events' ? 'text-red-500 font-bold' : ''
+              }`}
+            >
+              <Calendar className="w-4 h-4 mb-0.5" />
+              Events ({eventsCount})
+            </button>
+            <button
+              onClick={() => setActiveTab('allotment')}
+              className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
+                activeTab === 'allotment' ? 'text-red-500 font-bold' : ''
+              }`}
+            >
+              <Scale className="w-4 h-4 mb-0.5" />
+              Matrix
+            </button>
+            <button
+              onClick={() => setActiveTab('team')}
+              className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
+                activeTab === 'team' ? 'text-red-500 font-bold' : ''
+              }`}
+            >
+              <Users className="w-4 h-4 mb-0.5" />
+              Team
+            </button>
+            <button
+              onClick={() => setActiveTab('grading')}
+              className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
+                activeTab === 'grading' ? 'text-red-500 font-bold' : ''
+              }`}
+            >
+              <Star className="w-4 h-4 mb-0.5 text-amber-400" />
+              Grading
+            </button>
+            <button
+              onClick={() => setActiveTab('activity')}
+              className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
+                activeTab === 'activity' ? 'text-red-500 font-bold' : ''
+              }`}
+            >
+              <Activity className="w-4 h-4 mb-0.5" />
+              Audit
+            </button>
+          </div>
+        )}
 
       </div>
     </header>

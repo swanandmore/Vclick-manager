@@ -24,6 +24,10 @@ let mongoDb = null;
 let stateCollection = null;
 let isMongoConnected = false;
 
+// Access Control Passcodes for Heads (Admins) and Coordinators
+const HEAD_PASSWORD = process.env.HEAD_PASSWORD || 'head2026';
+const COORD_PASSWORD = process.env.COORD_PASSWORD || 'coord2026';
+
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
@@ -298,6 +302,62 @@ wss.on('connection', (ws) => {
 app.use(cors());
 app.use(express.json());
 
+// Authentication Endpoint for Operating Heads (Admins) and Coordinators
+app.post('/api/auth/login', (req, res) => {
+  const { role, memberId, name, password } = req.body;
+
+  if (!role || !password) {
+    return res.status(400).json({ error: 'Role and passcode are required.' });
+  }
+
+  const cleanRole = role === 'Head' ? 'Head' : (role === 'Coordinator' ? 'Coordinator' : null);
+  if (!cleanRole) {
+    return res.status(400).json({ error: 'Invalid login role. Must be Head or Coordinator.' });
+  }
+
+  const trimmedPass = String(password).trim();
+
+  if (cleanRole === 'Head') {
+    if (trimmedPass !== HEAD_PASSWORD) {
+      return res.status(401).json({ error: 'Incorrect Operating Head passcode. Access denied.' });
+    }
+    const headMember = state.members.find(m => m.id === memberId || (m.role === 'Head' && m.name === name)) || {
+      id: memberId || 'm-head',
+      name: name || 'Swanand More',
+      role: 'Head',
+      campus: 'Kondhwa'
+    };
+    return res.json({
+      success: true,
+      user: {
+        id: headMember.id,
+        name: headMember.name,
+        role: 'Head',
+        campus: headMember.campus
+      }
+    });
+  }
+
+  if (cleanRole === 'Coordinator') {
+    if (trimmedPass !== COORD_PASSWORD) {
+      return res.status(401).json({ error: 'Incorrect Coordinator passcode. Access denied.' });
+    }
+    const coordMember = state.members.find(m => m.id === memberId || (m.role === 'Coordinator' && m.name === name));
+    if (!coordMember) {
+      return res.status(404).json({ error: 'Coordinator profile not found in club records.' });
+    }
+    return res.json({
+      success: true,
+      user: {
+        id: coordMember.id,
+        name: coordMember.name,
+        role: 'Coordinator',
+        campus: coordMember.campus
+      }
+    });
+  }
+});
+
 app.get('/api/state', (req, res) => {
   res.json({
     state,
@@ -568,13 +628,18 @@ app.post('/api/events/:id/toggle-drive', (req, res) => {
 // Save Event Crew Member Review & 5-Point Grade
 app.post('/api/events/:id/reviews', (req, res) => {
   const { id } = req.params;
-  const { memberId, isReviewed, rating, feedback, headName } = req.body;
+  const { memberId, isReviewed, rating, feedback, headName, userRole } = req.body;
 
   const event = state.events.find(e => e.id === id);
   const member = state.members.find(m => m.id === memberId);
 
   if (!event || !member) {
     return res.status(404).json({ error: 'Event or Member not found' });
+  }
+
+  // Permission Guard: Coordinators can ONLY review & grade Volunteers!
+  if (userRole === 'Coordinator' && member.role !== 'Volunteer') {
+    return res.status(403).json({ error: 'Coordinators are strictly restricted to grading Volunteers only.' });
   }
 
   if (member.role === 'Head') {
@@ -774,11 +839,15 @@ app.put('/api/members/:id', (req, res) => {
 // Update Initial Baseline Grade for Coordinator / Volunteer
 app.put('/api/members/:id/initial-grade', (req, res) => {
   const { id } = req.params;
-  const { initialGrade, headName } = req.body;
+  const { initialGrade, headName, userRole } = req.body;
   const member = state.members.find(m => m.id === id);
 
   if (!member) {
     return res.status(404).json({ error: 'Member not found' });
+  }
+
+  if (userRole && userRole !== 'Head') {
+    return res.status(403).json({ error: 'Only Operating Heads can edit baseline initial grades.' });
   }
 
   if (member.role === 'Head') {
@@ -966,7 +1035,10 @@ app.get('/api/export/csv', (req, res) => {
 
 // Reset Demo Data
 app.post('/api/reset-demo', (req, res) => {
-  const { headName } = req.body;
+  const { headName, userRole } = req.body;
+  if (userRole && userRole !== 'Head') {
+    return res.status(403).json({ error: 'Only Operating Heads can reset the database.' });
+  }
   state = {
     members: JSON.parse(JSON.stringify(initialMembers)),
     events: JSON.parse(JSON.stringify(initialEvents)),

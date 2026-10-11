@@ -30,7 +30,8 @@ export default function GradingDashboard({
   currentHead,
   onSaveReview,
   onSaveInitialGrade,
-  theme = 'dark'
+  theme = 'dark',
+  authUser
 }) {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('ALL'); // ALL, Coordinator, Volunteer
@@ -49,16 +50,18 @@ export default function GradingDashboard({
   const [savedKey, setSavedKey] = useState(null);
 
   const isDark = theme === 'dark';
+  const isCoord = authUser?.role === 'Coordinator';
+  const isHead = authUser?.role === 'Head';
 
-  // Access Control: Only Operating Heads have access
+  // Access Control: Operating Heads or Coordinators
   const headMembers = members.filter(m => m.role === 'Head');
   const authorizedHeadNames = headMembers.length > 0 
     ? headMembers.map(h => h.name.toLowerCase()) 
     : ['swanand more', 'pratham hindocha', 'varad belsare'];
   
-  const isHeadAuthorized = authorizedHeadNames.includes((currentHead || '').toLowerCase());
+  const isAuthorized = isCoord || isHead || authorizedHeadNames.includes((currentHead || '').toLowerCase());
 
-  if (!isHeadAuthorized) {
+  if (!isAuthorized) {
     return (
       <div className={`p-8 rounded-3xl border text-center max-w-2xl mx-auto my-12 shadow-2xl ${
         isDark ? 'bg-zinc-900/90 border-zinc-800 text-zinc-100' : 'bg-white border-zinc-200 text-zinc-900'
@@ -67,24 +70,20 @@ export default function GradingDashboard({
           <Lock className="w-8 h-8" />
         </div>
         <h2 className="text-xl font-black uppercase tracking-wider mb-2">
-          Restricted Access: Operating Heads Only
+          Restricted Access: Operating Heads & Coordinators
         </h2>
         <p className="text-xs text-zinc-400 mb-6 leading-relaxed">
-          The Performance & Grading Portal contains confidential evaluation metrics and is restricted exclusively to VCLICK Operating Heads. 
-          Coordinators and Volunteers cannot view or edit grading records.
+          The Performance & Grading Portal contains confidential evaluation metrics. 
+          Please sign in using your authorized Head or Coordinator passcode to access reviews.
         </p>
-        <div className="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800 text-xs text-left max-w-md mx-auto">
-          <p className="font-semibold text-zinc-300 mb-1">How to access:</p>
-          <p className="text-zinc-500 text-[11px]">
-            Please switch to an Operating Head profile (Swanand More, Pratham Hindocha, or Varad Belsare) using the profile switcher in the top navigation bar.
-          </p>
-        </div>
       </div>
     );
   }
 
-  // Filter ONLY Coordinators and Volunteers (Heads are never graded)
-  const assessableMembers = members.filter(m => m.role === 'Coordinator' || m.role === 'Volunteer');
+  // Permission Boundary: Coordinators can ONLY access and grade Volunteers!
+  const assessableMembers = isCoord
+    ? members.filter(m => m.role === 'Volunteer')
+    : members.filter(m => m.role === 'Coordinator' || m.role === 'Volunteer');
 
   // Overall Statistics
   const totalCrew = assessableMembers.length;
@@ -213,7 +212,7 @@ export default function GradingDashboard({
   return (
     <div className="space-y-6">
       
-      {/* Top Leadership Confidential Banner */}
+      {/* Top Leadership / Coordinator Confidential Banner */}
       <div className={`p-5 rounded-3xl border shadow-xl relative overflow-hidden ${
         isDark ? 'bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border-zinc-800' : 'bg-gradient-to-r from-zinc-50 via-white to-zinc-50 border-zinc-200'
       }`}>
@@ -226,15 +225,22 @@ export default function GradingDashboard({
             <div>
               <div className="flex items-center space-x-2">
                 <h1 className="text-lg font-black tracking-wide uppercase">
-                  Crew Performance & Auto-Grading Portal
+                  {isCoord ? 'Volunteer Performance & Event Grading' : 'Crew Performance & Auto-Grading Portal'}
                 </h1>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/30 flex items-center space-x-1">
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border flex items-center space-x-1 ${
+                  isCoord 
+                    ? 'bg-blue-500/10 text-blue-400 border-blue-500/30' 
+                    : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                }`}>
                   <ShieldCheck className="w-3 h-3 inline mr-0.5" />
-                  Heads Only
+                  {isCoord ? 'Coordinator Access' : 'Heads Admin'}
                 </span>
               </div>
               <p className={`text-xs mt-0.5 ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                Evaluates Coordinators & Volunteers. Grades dynamically auto-calculate from baseline initial grades and verified 5-point event reviews.
+                {isCoord 
+                  ? "Review volunteers' event photos/videos, toggle the Reviewed checkmark, and assign 1-5 star event ratings."
+                  : "Evaluates Coordinators & Volunteers. Grades dynamically auto-calculate from baseline initial grades and verified 5-point event reviews."
+                }
               </p>
             </div>
           </div>
@@ -243,7 +249,8 @@ export default function GradingDashboard({
             <span className={`px-3 py-1.5 rounded-xl border font-medium ${
               isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-300' : 'bg-zinc-100 border-zinc-200 text-zinc-700'
             }`}>
-              Authorized Head: <strong className="text-red-500 ml-1">{currentHead}</strong>
+              {isCoord ? 'Operating Coordinator: ' : 'Authorized Head: '}
+              <strong className="text-red-500 ml-1">{authUser?.name || currentHead}</strong>
             </span>
           </div>
         </div>
@@ -317,17 +324,25 @@ export default function GradingDashboard({
 
         <div className="flex flex-wrap items-center gap-2">
           
-          <select
-            value={roleFilter}
-            onChange={(e) => setRoleFilter(e.target.value)}
-            className={`px-3 py-2 border rounded-xl text-xs focus:outline-none focus:border-red-500 ${
-              isDark ? 'bg-zinc-950 border-zinc-800 text-zinc-200' : 'bg-zinc-50 border-zinc-300 text-zinc-800'
-            }`}
-          >
-            <option value="ALL">All Roles (Coords + Vols)</option>
-            <option value="Coordinator">Coordinators Only</option>
-            <option value="Volunteer">Volunteers Only</option>
-          </select>
+          {!isCoord ? (
+            <select
+              value={roleFilter}
+              onChange={(e) => setRoleFilter(e.target.value)}
+              className={`px-3 py-2 border rounded-xl text-xs focus:outline-none focus:border-red-500 ${
+                isDark ? 'bg-zinc-950 border-zinc-800 text-zinc-200' : 'bg-zinc-50 border-zinc-300 text-zinc-800'
+              }`}
+            >
+              <option value="ALL">All Roles (Coords + Vols)</option>
+              <option value="Coordinator">Coordinators Only</option>
+              <option value="Volunteer">Volunteers Only</option>
+            </select>
+          ) : (
+            <div className={`px-3 py-2 border rounded-xl text-xs font-bold text-red-500 ${
+              isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-zinc-50 border-zinc-300'
+            }`}>
+              Volunteers
+            </div>
+          )}
 
           <select
             value={statusFilter}
@@ -452,16 +467,18 @@ export default function GradingDashboard({
                         <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Initial Baseline</div>
                         <div className="text-xs font-black text-zinc-200">{initialGrade.toFixed(1)} <span className="text-[10px] font-normal text-zinc-500">/ 5.0</span></div>
                       </div>
-                      <button
-                        onClick={() => {
-                          setEditingInitialMember(member);
-                          setNewInitialGrade(initialGrade);
-                        }}
-                        title="Edit baseline initial grade"
-                        className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition"
-                      >
-                        <Edit2 className="w-3 h-3" />
-                      </button>
+                      {!isCoord && (
+                        <button
+                          onClick={() => {
+                            setEditingInitialMember(member);
+                            setNewInitialGrade(initialGrade);
+                          }}
+                          title="Edit baseline initial grade"
+                          className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition"
+                        >
+                          <Edit2 className="w-3 h-3" />
+                        </button>
+                      )}
                     </div>
 
                     {/* Overall Auto Grade Display */}
