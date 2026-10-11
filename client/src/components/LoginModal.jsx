@@ -161,14 +161,6 @@ export default function LoginModal({
                 <span>Coordinator</span>
               </button>
             </div>
-
-            <p className="text-[11px] text-zinc-400 mt-1.5 px-1">
-              {selectedRole === 'Head' ? (
-                <span>👑 <strong>Full Admin:</strong> Events, Matrix, Team Roster, Grading & System Tools.</span>
-              ) : (
-                <span>🎯 <strong>Coord Access:</strong> Review Volunteers' photos/videos & give 5-star event grades.</span>
-              )}
-            </p>
           </div>
 
           {/* Name / Profile Selector */}
@@ -219,17 +211,6 @@ export default function LoginModal({
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
-            </div>
-          </div>
-
-          {/* Passcode Hint Pill */}
-          <div className={`p-3 rounded-2xl border text-[11px] leading-relaxed ${
-            isDark ? 'bg-zinc-950/60 border-zinc-800 text-zinc-400' : 'bg-zinc-50 border-zinc-200 text-zinc-600'
-          }`}>
-            <span className="font-bold text-red-500">Default Access Passcodes:</span>
-            <div className="mt-1 flex flex-col gap-0.5 font-mono text-[10px]">
-              <div>👑 Head Passcode: <strong className="text-zinc-200">head2026</strong></div>
-              <div>🎯 Coordinator Passcode: <strong className="text-zinc-200">coord2026</strong></div>
             </div>
           </div>
 
