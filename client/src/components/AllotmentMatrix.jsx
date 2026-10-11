@@ -309,17 +309,17 @@ export default function AllotmentMatrix({
               }`}>
                 
                 {/* Sticky Member Column 1 */}
-                <th className={`py-4 px-4 sticky left-0 z-30 min-w-[210px] shadow-sm ${
+                <th className={`py-4 px-3 sm:px-4 sticky left-0 z-30 min-w-[150px] sm:min-w-[210px] w-[150px] sm:w-[210px] shadow-sm ${
                   isDark ? 'bg-zinc-950' : 'bg-zinc-50'
                 }`}>
                   Team Member
                 </th>
 
                 {/* Sticky Member Column 2 */}
-                <th className={`py-4 px-3 sticky left-[210px] z-30 min-w-[100px] border-r shadow-md ${
+                <th className={`py-4 px-2 sm:px-3 sticky left-[150px] sm:left-[210px] z-30 min-w-[75px] sm:min-w-[100px] w-[75px] sm:w-[100px] border-r shadow-md text-center sm:text-left ${
                   isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-zinc-50 border-zinc-200'
                 }`}>
-                  Events Total
+                  <span className="hidden sm:inline">Events </span>Total
                 </th>
 
                 {/* Event Columns */}
@@ -358,18 +358,18 @@ export default function AllotmentMatrix({
                   }`}>
                     
                     {/* Sticky Column: Member Name, Role, Campus */}
-                    <td className={`py-3 px-4 sticky left-0 z-20 shadow-sm ${
+                    <td className={`py-3 px-3 sm:px-4 sticky left-0 z-20 min-w-[150px] sm:min-w-[210px] w-[150px] sm:w-[210px] shadow-sm ${
                       isDark ? 'bg-zinc-900 group-hover:bg-zinc-850' : 'bg-white group-hover:bg-zinc-50'
                     }`}>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-bold text-sm truncate max-w-[130px]">{member.name}</span>
+                      <div className="flex items-center space-x-1.5 sm:space-x-2">
+                        <span className="font-bold text-xs sm:text-sm truncate max-w-[100px] sm:max-w-[130px]">{member.name}</span>
                         {member.hasCamera && (
                           <span title="Owns camera">
                             <Camera className="w-3.5 h-3.5 text-red-500 shrink-0" />
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center space-x-1.5 text-[10px] opacity-70 mt-0.5">
+                      <div className="flex items-center space-x-1 text-[9px] sm:text-[10px] opacity-70 mt-0.5 truncate">
                         <span className="font-semibold">{member.role}</span>
                         <span>•</span>
                         <span>{member.campus}</span>
@@ -379,17 +379,17 @@ export default function AllotmentMatrix({
                     </td>
 
                     {/* Sticky Column: Event Count Badge */}
-                    <td className={`py-3 px-3 sticky left-[210px] z-20 border-r shadow-md font-mono ${
+                    <td className={`py-3 px-2 sm:px-3 sticky left-[150px] sm:left-[210px] z-20 min-w-[75px] sm:min-w-[100px] w-[75px] sm:w-[100px] border-r shadow-md font-mono text-center sm:text-left ${
                       isDark ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-200'
                     }`}>
-                      <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-extrabold ${
+                      <span className={`inline-block px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-extrabold ${
                         count === 0
                           ? 'bg-amber-500/20 text-amber-500 border border-amber-500/40'
                           : count >= 3
                           ? 'bg-red-500/20 text-red-500 border border-red-500/40'
                           : 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/40'
                       }`}>
-                        {count} {count === 1 ? 'event' : 'events'}
+                        {count} <span className="hidden sm:inline">{count === 1 ? 'event' : 'events'}</span>
                       </span>
                     </td>
 

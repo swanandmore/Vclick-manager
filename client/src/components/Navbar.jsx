@@ -52,12 +52,15 @@ export default function Navbar({
   const isDark = theme === 'dark';
 
   return (
-    <header className={`sticky top-0 z-40 border-b transition-colors backdrop-blur-md ${
-      isDark 
-        ? 'bg-zinc-950/95 border-zinc-800 text-zinc-100 shadow-xl' 
-        : 'bg-white/95 border-zinc-200 text-zinc-900 shadow-sm'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header 
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+      className={`sticky top-0 z-40 border-b transition-colors backdrop-blur-md ${
+        isDark 
+          ? 'bg-zinc-950/95 border-zinc-800 text-zinc-100 shadow-xl' 
+          : 'bg-white/95 border-zinc-200 text-zinc-900 shadow-sm'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
           {/* Logo & Club Branding */}
@@ -416,7 +419,7 @@ export default function Navbar({
         }`}>
           <button
             onClick={() => setActiveTab('events')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium ${
+            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
               activeTab === 'events' ? 'text-red-500 font-bold' : ''
             }`}
           >
@@ -425,7 +428,7 @@ export default function Navbar({
           </button>
           <button
             onClick={() => setActiveTab('allotment')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium ${
+            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
               activeTab === 'allotment' ? 'text-red-500 font-bold' : ''
             }`}
           >
@@ -434,7 +437,7 @@ export default function Navbar({
           </button>
           <button
             onClick={() => setActiveTab('team')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium ${
+            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
               activeTab === 'team' ? 'text-red-500 font-bold' : ''
             }`}
           >
@@ -443,7 +446,7 @@ export default function Navbar({
           </button>
           <button
             onClick={() => setActiveTab('grading')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium ${
+            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
               activeTab === 'grading' ? 'text-red-500 font-bold' : ''
             }`}
           >
@@ -452,7 +455,7 @@ export default function Navbar({
           </button>
           <button
             onClick={() => setActiveTab('activity')}
-            className={`flex flex-col items-center py-1 text-[11px] font-medium ${
+            className={`flex flex-col items-center py-1 text-[11px] font-medium transition active:scale-95 select-none ${
               activeTab === 'activity' ? 'text-red-500 font-bold' : ''
             }`}
           >
