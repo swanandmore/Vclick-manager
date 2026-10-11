@@ -18,7 +18,8 @@ import {
   Edit3, 
   Trash2,
   MessageSquare,
-  Sparkles
+  Sparkles,
+  Star
 } from 'lucide-react';
 
 export function parseEventDate(dateStr) {
@@ -57,6 +58,7 @@ export default function EventList({
   onToggleMemberInEvent,
   onUpdateDriveLink,
   onOpenWhatsAppModal,
+  onOpenReviewModal,
   theme = 'dark'
 }) {
   const [search, setSearch] = useState('');
@@ -534,6 +536,15 @@ export default function EventList({
 
                         <td className="py-3.5 px-4 text-right">
                           <div className="flex items-center justify-end space-x-1 opacity-80 group-hover:opacity-100 transition">
+                            {onOpenReviewModal && (
+                              <button
+                                onClick={() => onOpenReviewModal(evt)}
+                                title="Review & Grade Event Crew (Heads Only)"
+                                className="p-1.5 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition"
+                              >
+                                <Star className="w-3.5 h-3.5 fill-amber-400/20" />
+                              </button>
+                            )}
                             <button
                               onClick={() => copyWhatsAppFormat(evt)}
                               title="Copy WhatsApp Group Allotment Text"
@@ -724,6 +735,15 @@ export default function EventList({
                     )}
 
                     <div className="flex items-center space-x-1">
+                      {onOpenReviewModal && (
+                        <button
+                          onClick={() => onOpenReviewModal(evt)}
+                          title="Review & Grade Event Crew (Heads Only)"
+                          className="p-1.5 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition"
+                        >
+                          <Star className="w-3.5 h-3.5 fill-amber-400/20" />
+                        </button>
+                      )}
                       <button
                         onClick={() => copyWhatsAppFormat(evt)}
                         title="Copy WhatsApp Group Message"

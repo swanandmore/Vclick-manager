@@ -13,7 +13,9 @@ import {
   ChevronDown,
   Sun,
   Moon,
-  MessageSquare
+  MessageSquare,
+  Star,
+  Award
 } from 'lucide-react';
 
 export default function Navbar({
@@ -126,6 +128,25 @@ export default function Navbar({
             >
               <Users className="w-4 h-4" />
               <span>Team Roster</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('grading')}
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                activeTab === 'grading'
+                  ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                  : isDark 
+                  ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' 
+                  : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
+              }`}
+            >
+              <Star className={`w-4 h-4 ${activeTab === 'grading' ? 'text-amber-300 fill-amber-300' : 'text-amber-400'}`} />
+              <span>Grading</span>
+              <span className={`text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider ${
+                activeTab === 'grading' ? 'bg-black/30 text-white' : 'bg-red-500/10 text-red-400 border border-red-500/20'
+              }`}>
+                Heads
+              </span>
             </button>
 
             <button

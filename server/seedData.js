@@ -38,7 +38,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO/VIDEO",
       "collegeTimings": "Morning 8:30 - 2:30",
-      "phone": "+91 98220 45678"
+      "phone": "+91 98220 45678",
+      "initialGrade": 4.2
     },
     {
       "id": "m-head-5",
@@ -48,7 +49,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO/VIDEO",
       "collegeTimings": "Morning 8:30 - 2:30",
-      "phone": "+91 98220 56789"
+      "phone": "+91 98220 56789",
+      "initialGrade": 4.1
     },
     {
       "id": "m-coord-1",
@@ -58,7 +60,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO/VIDEO",
       "collegeTimings": "Full Day",
-      "phone": "+91 91589 00118"
+      "phone": "+91 91589 00118",
+      "initialGrade": 4.3
     },
     {
       "id": "m-coord-2",
@@ -68,7 +71,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO",
       "collegeTimings": "Morning",
-      "phone": "+91 98340 03094"
+      "phone": "+91 98340 03094",
+      "initialGrade": 4.0
     },
     {
       "id": "m-coord-3",
@@ -78,7 +82,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO/VIDEO",
       "collegeTimings": "Afternoon",
-      "phone": "+91 95030 03282"
+      "phone": "+91 95030 03282",
+      "initialGrade": 4.2
     },
     {
       "id": "m-coord-4",
@@ -88,7 +93,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO",
       "collegeTimings": "Full Day",
-      "phone": "+91 98221 00004"
+      "phone": "+91 98221 00004",
+      "initialGrade": 4.1
     },
     {
       "id": "m-coord-5",
@@ -98,7 +104,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO/VIDEO",
       "collegeTimings": "Morning",
-      "phone": "+91 98221 00005"
+      "phone": "+91 98221 00005",
+      "initialGrade": 4.0
     },
     {
       "id": "m-vol-1",
@@ -108,7 +115,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO",
       "collegeTimings": "Morning",
-      "phone": "+91 70200 74374"
+      "phone": "+91 70200 74374",
+      "initialGrade": 4.0
     },
     {
       "id": "m-vol-2",
@@ -118,7 +126,8 @@ module.exports = {
       "hasCamera": true,
       "work": "PHOTO",
       "collegeTimings": "Morning",
-      "phone": "+91 92266 88579"
+      "phone": "+91 92266 88579",
+      "initialGrade": 3.9
     },
     {
       "id": "m-vol-3",
@@ -128,7 +137,8 @@ module.exports = {
       "hasCamera": false,
       "work": "PHOTO",
       "collegeTimings": "Afternoon",
-      "phone": "+91 77578 96741"
+      "phone": "+91 77578 96741",
+      "initialGrade": 3.8
     },
     {
       "id": "m-vol-4",
@@ -138,7 +148,8 @@ module.exports = {
       "hasCamera": false,
       "work": "VIDEO",
       "collegeTimings": "Morning",
-      "phone": "+91 80104 71706"
+      "phone": "+91 80104 71706",
+      "initialGrade": 4.0
     },
     {
       "id": "m-vol-5",
@@ -148,7 +159,8 @@ module.exports = {
       "hasCamera": false,
       "work": "PHOTO",
       "collegeTimings": "Morning",
-      "phone": "+91 94221 01306"
+      "phone": "+91 94221 01306",
+      "initialGrade": 3.9
     },
     {
       "id": "m-vol-6",
@@ -158,7 +170,8 @@ module.exports = {
       "hasCamera": false,
       "work": "PHOTO",
       "collegeTimings": "Afternoon",
-      "phone": "+91 88578 22264"
+      "phone": "+91 88578 22264",
+      "initialGrade": 3.8
     },
     {
       "id": "m-vol-7",
@@ -168,7 +181,8 @@ module.exports = {
       "hasCamera": false,
       "work": "VIDEO",
       "collegeTimings": "Morning",
-      "phone": "+91 82620 11791"
+      "phone": "+91 82620 11791",
+      "initialGrade": 4.0
     },
     {
       "id": "m-vol-8",
@@ -178,7 +192,8 @@ module.exports = {
       "hasCamera": false,
       "work": "PHOTO",
       "collegeTimings": "Morning",
-      "phone": "+91 90116 30162"
+      "phone": "+91 90116 30162",
+      "initialGrade": 4.1
     },
     {
       "id": "m-vol-9",
@@ -188,7 +203,8 @@ module.exports = {
       "hasCamera": false,
       "work": "EDIT",
       "collegeTimings": "Flexible",
-      "phone": "+91 74984 96896"
+      "phone": "+91 74984 96896",
+      "initialGrade": 4.0
     },
     {
       "id": "m-vol-10",
@@ -198,7 +214,8 @@ module.exports = {
       "hasCamera": false,
       "work": "VIDEO",
       "collegeTimings": "Morning",
-      "phone": "+91 88007 76337"
+      "phone": "+91 88007 76337",
+      "initialGrade": 3.8
     },
     {
       "id": "m-vol-11",
@@ -208,7 +225,8 @@ module.exports = {
       "hasCamera": false,
       "work": "VIDEO",
       "collegeTimings": "Morning",
-      "phone": "+91 90496 11411"
+      "phone": "+91 90496 11411",
+      "initialGrade": 3.9
     },
     {
       "id": "m-vol-12",
@@ -218,27 +236,8 @@ module.exports = {
       "hasCamera": false,
       "work": "EDIT",
       "collegeTimings": "Flexible",
-      "phone": "+91 90496 61710"
-    },
-    {
-      "id": "m-head-4",
-      "name": "Co-Head 4",
-      "role": "Head",
-      "campus": "Bibwewadi",
-      "hasCamera": true,
-      "work": "PHOTO/VIDEO",
-      "collegeTimings": "Morning",
-      "phone": ""
-    },
-    {
-      "id": "m-head-5",
-      "name": "Co-Head 5",
-      "role": "Head",
-      "campus": "Kondhwa",
-      "hasCamera": true,
-      "work": "PHOTO/VIDEO",
-      "collegeTimings": "Morning",
-      "phone": ""
+      "phone": "+91 90496 61710",
+      "initialGrade": 4.0
     }
   ],
   "initialEvents": [
@@ -260,7 +259,8 @@ module.exports = {
       "status": "Completed",
       "notes": "Guru Pournima portraits captured and delivered.",
       "createdBy": "Swanand More",
-      "createdAt": "2026-07-27T10:00:00.000Z"
+      "createdAt": "2026-07-27T10:00:00.000Z",
+      "crewReviews": []
     },
     {
       "id": "evt-2",
@@ -279,7 +279,8 @@ module.exports = {
       "status": "Completed",
       "notes": "IT Department faculty felicitation.",
       "createdBy": "Swanand More",
-      "createdAt": "2026-07-28T14:00:00.000Z"
+      "createdAt": "2026-07-28T14:00:00.000Z",
+      "crewReviews": []
     },
     {
       "id": "evt-3",
@@ -299,7 +300,17 @@ module.exports = {
       "status": "Completed",
       "notes": "Campus photography and reels captured.",
       "createdBy": "Pratham Hindocha",
-      "createdAt": "2026-07-30T09:30:00.000Z"
+      "createdAt": "2026-07-30T09:30:00.000Z",
+      "crewReviews": [
+        {
+          "memberId": "m-coord-4",
+          "isReviewed": true,
+          "rating": 5,
+          "feedback": "Outstanding campus candid portraits and crisp reel footage. Excellent angles and punctuality.",
+          "reviewedBy": "Pratham Hindocha",
+          "reviewedAt": "2026-08-01T11:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "evt-4",
@@ -319,7 +330,8 @@ module.exports = {
       "status": "Completed",
       "notes": "Mechanical department lab promotional video.",
       "createdBy": "Varad Belsare",
-      "createdAt": "2026-08-05T11:00:00.000Z"
+      "createdAt": "2026-08-05T11:00:00.000Z",
+      "crewReviews": []
     },
     {
       "id": "evt-5",
@@ -338,7 +350,17 @@ module.exports = {
       "status": "Completed",
       "notes": "National student conference coverage.",
       "createdBy": "Swanand More",
-      "createdAt": "2026-08-06T16:20:00.000Z"
+      "createdAt": "2026-08-06T16:20:00.000Z",
+      "crewReviews": [
+        {
+          "memberId": "m-vol-7",
+          "isReviewed": true,
+          "rating": 4,
+          "feedback": "Good conference video coverage. Gimbal movement was steady; work on capturing audio clearer in large halls.",
+          "reviewedBy": "Swanand More",
+          "reviewedAt": "2026-08-08T15:30:00.000Z"
+        }
+      ]
     },
     {
       "id": "evt-6",
@@ -362,7 +384,25 @@ module.exports = {
       "status": "Completed",
       "notes": "Flag hoisting and stage performances.",
       "createdBy": "Harshal Shinde",
-      "createdAt": "2026-08-12T09:00:00.000Z"
+      "createdAt": "2026-08-12T09:00:00.000Z",
+      "crewReviews": [
+        {
+          "memberId": "m-coord-1",
+          "isReviewed": true,
+          "rating": 5,
+          "feedback": "Flawless ceremony photography. Great composition during the national anthem and flag unfurling.",
+          "reviewedBy": "Swanand More",
+          "reviewedAt": "2026-08-16T10:00:00.000Z"
+        },
+        {
+          "memberId": "m-vol-4",
+          "isReviewed": true,
+          "rating": 4,
+          "feedback": "Very good stage coverage and cultural performance clips. Timely upload to Drive.",
+          "reviewedBy": "Swanand More",
+          "reviewedAt": "2026-08-16T10:15:00.000Z"
+        }
+      ]
     },
     {
       "id": "evt-7",
@@ -386,7 +426,17 @@ module.exports = {
       "status": "Completed",
       "notes": "Main parade and grand auditorium ceremony.",
       "createdBy": "Swanand More",
-      "createdAt": "2026-08-12T09:15:00.000Z"
+      "createdAt": "2026-08-12T09:15:00.000Z",
+      "crewReviews": [
+        {
+          "memberId": "m-coord-3",
+          "isReviewed": true,
+          "rating": 5,
+          "feedback": "Sharp portraits of faculty and vibrant auditorium wide shots. Prompt delivery.",
+          "reviewedBy": "Pratham Hindocha",
+          "reviewedAt": "2026-08-16T12:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "evt-8",
@@ -405,7 +455,17 @@ module.exports = {
       "status": "Completed",
       "notes": "Guest speaker speech and audience reaction shots.",
       "createdBy": "Pratham Hindocha",
-      "createdAt": "2026-08-19T13:45:00.000Z"
+      "createdAt": "2026-08-19T13:45:00.000Z",
+      "crewReviews": [
+        {
+          "memberId": "m-vol-8",
+          "isReviewed": true,
+          "rating": 4,
+          "feedback": "Good low-light auditorium photography. Nice audience emotion captures.",
+          "reviewedBy": "Pratham Hindocha",
+          "reviewedAt": "2026-08-22T14:00:00.000Z"
+        }
+      ]
     },
     {
       "id": "evt-9",
@@ -425,7 +485,8 @@ module.exports = {
       "status": "Completed",
       "notes": "AI and Data Science department lab inauguration.",
       "createdBy": "Swanand More",
-      "createdAt": "2026-08-28T17:00:00.000Z"
+      "createdAt": "2026-08-28T17:00:00.000Z",
+      "crewReviews": []
     }
   ]
 };

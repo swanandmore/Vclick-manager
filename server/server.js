@@ -34,11 +34,90 @@ let state = {
   activities: []
 };
 
+function enrichStateWithGrades(currentState) {
+  if (!currentState || !Array.isArray(currentState.members)) return;
+
+  if (!Array.isArray(currentState.events)) {
+    currentState.events = [];
+  }
+
+  // Ensure all events have crewReviews array
+  currentState.events.forEach(evt => {
+    if (!Array.isArray(evt.crewReviews)) {
+      evt.crewReviews = [];
+    }
+  });
+
+  // Calculate event count stats
+  const memberEventCounts = {};
+  currentState.members.forEach(m => {
+    memberEventCounts[m.id] = 0;
+  });
+  currentState.events.forEach(evt => {
+    (evt.assignedMemberIds || []).forEach(mId => {
+      memberEventCounts[mId] = (memberEventCounts[mId] || 0) + 1;
+    });
+  });
+
+  // Enrich members with grading metrics
+  currentState.members.forEach(m => {
+    if (m.role === 'Head') {
+      m.initialGrade = null;
+      m.overallGrade = null;
+      m.reviewsCount = 0;
+      m.pendingReviewsCount = 0;
+      m.avgEventRating = null;
+      return;
+    }
+
+    // Baseline Initial Grade (default 4.0 out of 5.0)
+    if (typeof m.initialGrade !== 'number' || isNaN(m.initialGrade)) {
+      m.initialGrade = 4.0;
+    } else {
+      m.initialGrade = Math.min(5, Math.max(1, Number(m.initialGrade.toFixed(1))));
+    }
+
+    // Gather valid reviews for this member across all assigned events
+    const validReviews = [];
+    const assignedCount = memberEventCounts[m.id] || 0;
+
+    currentState.events.forEach(evt => {
+      const isAssigned = Array.isArray(evt.assignedMemberIds) && evt.assignedMemberIds.includes(m.id);
+      if (isAssigned && Array.isArray(evt.crewReviews)) {
+        const rev = evt.crewReviews.find(r => r.memberId === m.id);
+        if (rev && rev.isReviewed === true && typeof rev.rating === 'number' && rev.rating >= 1 && rev.rating <= 5) {
+          validReviews.push(rev);
+        }
+      }
+    });
+
+    const reviewsCount = validReviews.length;
+    const pendingReviewsCount = Math.max(0, assignedCount - reviewsCount);
+
+    let overallGrade = m.initialGrade;
+    let avgEventRating = null;
+
+    if (reviewsCount > 0) {
+      const totalRatings = validReviews.reduce((sum, r) => sum + r.rating, 0);
+      avgEventRating = Number((totalRatings / reviewsCount).toFixed(1));
+      // Auto Grade formula: (Initial Grade + Sum of Event Ratings) / (1 + Count of Event Reviews)
+      overallGrade = Number(((m.initialGrade + totalRatings) / (1 + reviewsCount)).toFixed(1));
+    }
+
+    m.overallGrade = overallGrade;
+    m.reviewsCount = reviewsCount;
+    m.pendingReviewsCount = pendingReviewsCount;
+    m.avgEventRating = avgEventRating;
+  });
+}
+
 function loadStore() {
   if (fs.existsSync(DATA_FILE)) {
     try {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
       state = JSON.parse(raw);
+      enrichStateWithGrades(state);
+      saveStore();
       console.log('Database loaded from disk. Events:', state.events.length, 'Members:', state.members.length);
       return;
     } catch (err) {
@@ -59,6 +138,7 @@ function loadStore() {
       }
     ]
   };
+  enrichStateWithGrades(state);
   saveStore();
 }
 
@@ -105,11 +185,9 @@ async function initMongo() {
     const cloudDoc = await stateCollection.findOne({ _id: 'vclick_primary_state' });
     if (cloudDoc && cloudDoc.state && Array.isArray(cloudDoc.state.events) && cloudDoc.state.events.length > 0) {
       state = cloudDoc.state;
+      enrichStateWithGrades(state);
+      saveStore();
       console.log(`✅ Loaded persistent state from MongoDB Atlas: ${state.events.length} events, ${state.members.length} members.`);
-      // Sync to local file cache
-      try {
-        fs.writeFileSync(DATA_FILE, JSON.stringify(state, null, 2), 'utf8');
-      } catch (_) {}
     } else {
       // First time on MongoDB: seed cloud database with current data
       console.log('Initializing MongoDB Atlas with current club records...');
@@ -487,6 +565,90 @@ app.post('/api/events/:id/toggle-drive', (req, res) => {
   res.json({ event, memberStats: calculateEventStats() });
 });
 
+// Save Event Crew Member Review & 5-Point Grade
+app.post('/api/events/:id/reviews', (req, res) => {
+  const { id } = req.params;
+  const { memberId, isReviewed, rating, feedback, headName } = req.body;
+
+  const event = state.events.find(e => e.id === id);
+  const member = state.members.find(m => m.id === memberId);
+
+  if (!event || !member) {
+    return res.status(404).json({ error: 'Event or Member not found' });
+  }
+
+  if (member.role === 'Head') {
+    return res.status(400).json({ error: 'Heads cannot be graded. Grading applies only to Coordinators and Volunteers.' });
+  }
+
+  if (!Array.isArray(event.crewReviews)) {
+    event.crewReviews = [];
+  }
+
+  const reviewIdx = event.crewReviews.findIndex(r => r.memberId === memberId);
+  const reviewedFlag = Boolean(isReviewed);
+
+  if (!reviewedFlag) {
+    const unreviewedObj = {
+      memberId,
+      isReviewed: false,
+      rating: 0,
+      feedback: '',
+      reviewedBy: headName || 'Head',
+      reviewedAt: new Date().toISOString()
+    };
+    if (reviewIdx !== -1) {
+      event.crewReviews[reviewIdx] = unreviewedObj;
+    } else {
+      event.crewReviews.push(unreviewedObj);
+    }
+  } else {
+    // 5-Point grading scale: strictly 1 to 5 points
+    const numRating = Math.min(5, Math.max(1, Math.round(Number(rating) || 5)));
+    const cleanFeedback = (feedback || '').trim();
+
+    const reviewObj = {
+      memberId,
+      isReviewed: true,
+      rating: numRating,
+      feedback: cleanFeedback,
+      reviewedBy: headName || 'Head',
+      reviewedAt: new Date().toISOString()
+    };
+
+    if (reviewIdx !== -1) {
+      event.crewReviews[reviewIdx] = reviewObj;
+    } else {
+      event.crewReviews.push(reviewObj);
+    }
+  }
+
+  enrichStateWithGrades(state);
+  saveStore();
+
+  const updatedMember = state.members.find(m => m.id === memberId);
+  const activity = logActivity(
+    headName,
+    'GRADED_CREW',
+    reviewedFlag
+      ? `Reviewed & graded ${member.name} (${rating || 5}/5 ⭐) for "${event.name}". Auto grade updated to: ${updatedMember?.overallGrade || 4.0}/5.0`
+      : `Marked review pending for ${member.name} on "${event.name}"`
+  );
+
+  broadcast({
+    type: 'EVENT_UPDATED',
+    event,
+    state,
+    memberStats: calculateEventStats(),
+    activity,
+    message: reviewedFlag
+      ? `${headName || 'A head'} graded ${member.name} (${rating || 5}/5 ⭐) on "${event.name}"`
+      : `${headName || 'A head'} updated review status for ${member.name}`
+  });
+
+  res.json({ success: true, event, member: updatedMember, state, memberStats: calculateEventStats() });
+});
+
 // Delete Event
 app.delete('/api/events/:id', (req, res) => {
   const { id } = req.params;
@@ -498,6 +660,7 @@ app.delete('/api/events/:id', (req, res) => {
   }
 
   const deleted = state.events.splice(index, 1)[0];
+  enrichStateWithGrades(state);
   saveStore();
 
   const activity = logActivity(
@@ -520,24 +683,27 @@ app.delete('/api/events/:id', (req, res) => {
 
 // Add Member
 app.post('/api/members', (req, res) => {
-  const { name, role, campus, hasCamera, work, collegeTimings, phone, headName } = req.body;
+  const { name, role, campus, hasCamera, work, collegeTimings, phone, initialGrade, headName } = req.body;
 
   if (!name) {
     return res.status(400).json({ error: 'Member name is required' });
   }
 
+  const memberRole = role || 'Volunteer';
   const newMember = {
     id: 'm-' + Date.now(),
     name: name.trim(),
-    role: role || 'Volunteer',
+    role: memberRole,
     campus: campus || 'Bibwewadi',
     hasCamera: Boolean(hasCamera),
     work: work || 'PHOTO',
     collegeTimings: (collegeTimings || '').trim(),
-    phone: (phone || '').trim()
+    phone: (phone || '').trim(),
+    initialGrade: memberRole === 'Head' ? null : (typeof initialGrade === 'number' ? Math.min(5, Math.max(1, initialGrade)) : 4.0)
   };
 
   state.members.push(newMember);
+  enrichStateWithGrades(state);
   saveStore();
 
   const activity = logActivity(
@@ -576,7 +742,15 @@ app.put('/api/members/:id', (req, res) => {
     id: existing.id
   };
 
+  if (updatedMember.role === 'Head') {
+    updatedMember.initialGrade = null;
+    updatedMember.overallGrade = null;
+  } else if (typeof updatedMember.initialGrade === 'number') {
+    updatedMember.initialGrade = Math.min(5, Math.max(1, Number(updatedMember.initialGrade.toFixed(1))));
+  }
+
   state.members[index] = updatedMember;
+  enrichStateWithGrades(state);
   saveStore();
 
   const activity = logActivity(
@@ -597,6 +771,44 @@ app.put('/api/members/:id', (req, res) => {
   res.json({ member: updatedMember, memberStats: calculateEventStats() });
 });
 
+// Update Initial Baseline Grade for Coordinator / Volunteer
+app.put('/api/members/:id/initial-grade', (req, res) => {
+  const { id } = req.params;
+  const { initialGrade, headName } = req.body;
+  const member = state.members.find(m => m.id === id);
+
+  if (!member) {
+    return res.status(404).json({ error: 'Member not found' });
+  }
+
+  if (member.role === 'Head') {
+    return res.status(400).json({ error: 'Heads do not have baseline grades.' });
+  }
+
+  const gradeNum = Math.min(5, Math.max(1, parseFloat(initialGrade) || 4.0));
+  member.initialGrade = Number(gradeNum.toFixed(1));
+
+  enrichStateWithGrades(state);
+  saveStore();
+
+  const activity = logActivity(
+    headName,
+    'UPDATED_INITIAL_GRADE',
+    `Updated baseline grade for ${member.name} to ${member.initialGrade}/5.0 (Overall auto-grade: ${member.overallGrade}/5.0)`
+  );
+
+  broadcast({
+    type: 'MEMBER_UPDATED',
+    member,
+    state,
+    memberStats: calculateEventStats(),
+    activity,
+    message: `${headName || 'A head'} updated baseline grade for ${member.name} to ${member.initialGrade}/5.0`
+  });
+
+  res.json({ success: true, member, state });
+});
+
 // Delete Member
 app.delete('/api/members/:id', (req, res) => {
   const { id } = req.params;
@@ -613,8 +825,12 @@ app.delete('/api/members/:id', (req, res) => {
     if (evt.assignedMemberIds && evt.assignedMemberIds.includes(id)) {
       evt.assignedMemberIds = evt.assignedMemberIds.filter(mId => mId !== id);
     }
+    if (Array.isArray(evt.crewReviews)) {
+      evt.crewReviews = evt.crewReviews.filter(r => r.memberId !== id);
+    }
   });
 
+  enrichStateWithGrades(state);
   saveStore();
 
   const activity = logActivity(
@@ -723,9 +939,12 @@ app.post('/api/smart-suggest', (req, res) => {
 app.get('/api/export/csv', (req, res) => {
   const stats = calculateEventStats();
 
-  let csv = 'Type,Name,Role,Campus,Camera,Work,Total Events Covered,College Timings\r\n';
+  let csv = 'Type,Name,Role,Campus,Camera,Work,Initial Grade,Overall Auto Grade,Reviews Count,Total Events Covered,College Timings\r\n';
   state.members.forEach(m => {
-    csv += `"${m.name}","${m.role}","${m.campus}","${m.hasCamera ? 'Yes' : 'No'}","${m.work}",${stats[m.id] || 0},"${m.collegeTimings || ''}"\r\n`;
+    const initG = m.role === 'Head' ? 'N/A (Head)' : (m.initialGrade ? `${m.initialGrade}/5.0` : '4.0/5.0');
+    const overG = m.role === 'Head' ? 'N/A (Head)' : (m.overallGrade ? `${m.overallGrade}/5.0` : `${initG}`);
+    const revCnt = m.role === 'Head' ? 'N/A' : (m.reviewsCount || 0);
+    csv += `"${m.name}","${m.role}","${m.campus}","${m.hasCamera ? 'Yes' : 'No'}","${m.work}","${initG}","${overG}",${revCnt},${stats[m.id] || 0},"${m.collegeTimings || ''}"\r\n`;
   });
 
   csv += '\r\n\r\nSr No,Event Name,Contact Person,Date,Campus,Students Assigned,Drive Link,Drive Submitted,Notes\r\n';

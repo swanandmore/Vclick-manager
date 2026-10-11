@@ -8,7 +8,8 @@ import {
   Clock, 
   MapPin, 
   CheckCircle,
-  Sparkles
+  Sparkles,
+  Star
 } from 'lucide-react';
 
 export default function TeamRoster({
@@ -17,6 +18,7 @@ export default function TeamRoster({
   onAddMember,
   onEditMember,
   onDeleteMember,
+  onViewGrading,
   theme = 'dark'
 }) {
   const [search, setSearch] = useState('');
@@ -146,15 +148,25 @@ export default function TeamRoster({
                     </div>
                   </div>
 
-                  <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                    count === 0
-                      ? 'bg-amber-500/20 text-amber-500 border border-amber-500/40'
-                      : count >= 3
-                      ? 'bg-red-500/20 text-red-500 border border-red-500/40'
-                      : 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/40'
-                  }`}>
-                    {count} {count === 1 ? 'Event' : 'Events'}
-                  </span>
+                  <div className="flex flex-col items-end space-y-1">
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                      count === 0
+                        ? 'bg-amber-500/20 text-amber-500 border border-amber-500/40'
+                        : count >= 3
+                        ? 'bg-red-500/20 text-red-500 border border-red-500/40'
+                        : 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/40'
+                    }`}>
+                      {count} {count === 1 ? 'Event' : 'Events'}
+                    </span>
+
+                    {m.role !== 'Head' && (
+                      <span className="flex items-center space-x-1 text-[10px] font-black text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
+                        <Star className="w-2.5 h-2.5 fill-amber-400" />
+                        <span>{(m.overallGrade ?? m.initialGrade ?? 4.0).toFixed(1)}</span>
+                        <span className="text-[8px] text-zinc-500 font-normal">/ 5.0</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="space-y-1.5 text-xs opacity-75 my-3">
@@ -197,6 +209,15 @@ export default function TeamRoster({
               <div className={`pt-3 border-t flex items-center justify-end space-x-1 ${
                 isDark ? 'border-zinc-800' : 'border-zinc-200'
               }`}>
+                {m.role !== 'Head' && onViewGrading && (
+                  <button
+                    onClick={() => onViewGrading(m.id)}
+                    className="px-2.5 py-1 rounded-lg text-xs font-semibold text-amber-400 hover:text-amber-300 hover:bg-amber-500/10 transition flex items-center space-x-1 mr-auto"
+                  >
+                    <Star className="w-3 h-3 fill-amber-400/20" />
+                    <span>Grade & Reviews</span>
+                  </button>
+                )}
                 <button
                   onClick={() => onEditMember(m)}
                   className={`px-3 py-1 rounded-lg text-xs font-medium transition ${

@@ -7,6 +7,8 @@ import TeamRoster from './components/TeamRoster';
 import MemberModal from './components/MemberModal';
 import LiveActivityFeed from './components/LiveActivityFeed';
 import WhatsAppSyncModal from './components/WhatsAppSyncModal';
+import GradingDashboard from './components/GradingDashboard';
+import EventReviewModal from './components/EventReviewModal';
 import { Sparkles } from 'lucide-react';
 
 export default function App() {
@@ -49,6 +51,8 @@ export default function App() {
   const [isMemberModalOpen, setIsMemberModalOpen] = useState(false);
   const [memberToEdit, setMemberToEdit] = useState(null);
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [eventToReview, setEventToReview] = useState(null);
 
   const socketRef = useRef(null);
 
@@ -332,6 +336,58 @@ export default function App() {
     }
   };
 
+  // Save Event Review & 5-Point Grade
+  const handleSaveReview = async (eventId, memberId, reviewData) => {
+    try {
+      const res = await fetch(getApiUrl(`/api/events/${eventId}/reviews`), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          memberId,
+          isReviewed: reviewData.isReviewed,
+          rating: reviewData.rating,
+          feedback: reviewData.feedback,
+          headName: currentHead
+        })
+      });
+      const data = await res.json();
+      if (data.state) {
+        if (data.state.events) setEvents(data.state.events);
+        if (data.state.members) setMembers(data.state.members);
+        if (data.state.activities) setActivities(data.state.activities);
+      }
+      if (data.memberStats) setMemberStats(data.memberStats);
+      if (reviewData.isReviewed) {
+        showToast(`Graded ${data.member?.name || 'crew'} (${reviewData.rating}/5 ⭐) • Auto Grade: ${data.member?.overallGrade || '4.0'}/5.0`);
+      } else {
+        showToast('Review marked pending.');
+      }
+    } catch (err) {
+      console.error('Failed to save review:', err);
+    }
+  };
+
+  // Update Baseline Initial Grade
+  const handleSaveInitialGrade = async (memberId, initialGrade) => {
+    try {
+      const res = await fetch(getApiUrl(`/api/members/${memberId}/initial-grade`), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          initialGrade,
+          headName: currentHead
+        })
+      });
+      const data = await res.json();
+      if (data.state && data.state.members) {
+        setMembers(data.state.members);
+      }
+      showToast(`Updated baseline grade to ${initialGrade}/5.0`);
+    } catch (err) {
+      console.error('Failed to update initial grade:', err);
+    }
+  };
+
   const handleResetData = async () => {
     if (!window.confirm('Reset all records to the original baseline from the sheets?')) return;
     try {
@@ -461,6 +517,10 @@ export default function App() {
             onToggleMemberInEvent={handleToggleMemberInEvent}
             onUpdateDriveLink={handleUpdateDriveLink}
             onOpenWhatsAppModal={() => setIsWhatsAppModalOpen(true)}
+            onOpenReviewModal={(evt) => {
+              setEventToReview(evt);
+              setIsReviewModalOpen(true);
+            }}
             theme={theme}
           />
         )}
@@ -489,6 +549,18 @@ export default function App() {
               setIsMemberModalOpen(true);
             }}
             onDeleteMember={handleDeleteMember}
+            onViewGrading={() => setActiveTab('grading')}
+            theme={theme}
+          />
+        )}
+
+        {activeTab === 'grading' && (
+          <GradingDashboard
+            members={members}
+            events={events}
+            currentHead={currentHead}
+            onSaveReview={handleSaveReview}
+            onSaveInitialGrade={handleSaveInitialGrade}
             theme={theme}
           />
         )}
@@ -543,6 +615,19 @@ export default function App() {
             body: JSON.stringify({ ...updatedEvt, headName: currentHead })
           });
         }}
+      />
+
+      {/* Event Crew Review & 5-Point Grading Modal */}
+      <EventReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => {
+          setIsReviewModalOpen(false);
+          setEventToReview(null);
+        }}
+        event={eventToReview}
+        allMembers={members}
+        currentHead={currentHead}
+        onSaveReview={handleSaveReview}
       />
 
     </div>

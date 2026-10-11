@@ -14,7 +14,8 @@ export default function MemberModal({
     hasCamera: false,
     work: 'PHOTO',
     collegeTimings: 'Morning',
-    phone: ''
+    phone: '',
+    initialGrade: 4.0
   });
 
   useEffect(() => {
@@ -26,7 +27,8 @@ export default function MemberModal({
         hasCamera: memberToEdit.hasCamera || false,
         work: memberToEdit.work || 'PHOTO',
         collegeTimings: memberToEdit.collegeTimings || '',
-        phone: memberToEdit.phone || ''
+        phone: memberToEdit.phone || '',
+        initialGrade: typeof memberToEdit.initialGrade === 'number' ? memberToEdit.initialGrade : 4.0
       });
     } else {
       setFormData({
@@ -36,7 +38,8 @@ export default function MemberModal({
         hasCamera: false,
         work: 'PHOTO',
         collegeTimings: 'Morning',
-        phone: ''
+        phone: '',
+        initialGrade: 4.0
       });
     }
   }, [memberToEdit, isOpen]);
@@ -157,6 +160,29 @@ export default function MemberModal({
               className="w-full px-3.5 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-red-500"
             />
           </div>
+
+          {formData.role !== 'Head' && (
+            <div>
+              <label className="block text-xs font-semibold text-zinc-300 mb-1">
+                Initial Baseline Grade (1.0 to 5.0 Points)
+              </label>
+              <div className="flex items-center space-x-3">
+                <input
+                  type="number"
+                  min="1"
+                  max="5"
+                  step="0.1"
+                  value={formData.initialGrade}
+                  onChange={(e) => setFormData({ ...formData, initialGrade: parseFloat(e.target.value) || 4.0 })}
+                  className="w-full px-3.5 py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-red-500"
+                />
+                <span className="text-xs font-bold text-amber-400 shrink-0">/ 5.0 Points</span>
+              </div>
+              <p className="text-[10px] text-zinc-500 mt-1">
+                Acts as the baseline induction rating for auto-grading calculations.
+              </p>
+            </div>
+          )}
 
           <div>
             <label className="block text-xs font-semibold text-zinc-300 mb-1">
