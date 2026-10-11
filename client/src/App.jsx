@@ -459,7 +459,7 @@ export default function App() {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors duration-200 ${
+    <div className={`min-h-screen flex flex-col w-full max-w-full overflow-x-hidden transition-colors duration-200 ${
       isDark ? 'bg-zinc-950 text-zinc-100' : 'bg-zinc-100 text-zinc-900'
     }`}>
       
@@ -497,7 +497,7 @@ export default function App() {
       )}
 
       {/* Main Screen Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
         
         {activeTab === 'events' && (
           <EventList

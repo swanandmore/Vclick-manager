@@ -15,7 +15,8 @@ import {
   Moon,
   MessageSquare,
   Star,
-  Award
+  Award,
+  SlidersHorizontal
 } from 'lucide-react';
 
 export default function Navbar({
@@ -39,6 +40,7 @@ export default function Navbar({
 }) {
   const [showHeadMenu, setShowHeadMenu] = useState(false);
   const [showPresenceMenu, setShowPresenceMenu] = useState(false);
+  const [showToolsMenu, setShowToolsMenu] = useState(false);
   const fileInputRef = useRef(null);
 
   // Dynamically derive head options from team members whose role is 'Head'
@@ -80,7 +82,7 @@ export default function Navbar({
           }`}>
             <button
               onClick={() => setActiveTab('events')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === 'events'
                   ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
                   : isDark 
@@ -88,9 +90,9 @@ export default function Navbar({
                   : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
               }`}
             >
-              <Calendar className="w-4 h-4" />
+              <Calendar className="w-3.5 h-3.5" />
               <span>Events</span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-bold ${
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-bold ${
                 activeTab === 'events' ? 'bg-white/20 text-white' : 'bg-zinc-800 text-zinc-300'
               }`}>
                 {eventsCount}
@@ -99,7 +101,7 @@ export default function Navbar({
 
             <button
               onClick={() => setActiveTab('allotment')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === 'allotment'
                   ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
                   : isDark 
@@ -107,18 +109,18 @@ export default function Navbar({
                   : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
               }`}
             >
-              <Scale className="w-4 h-4" />
-              <span>Allotment Matrix</span>
+              <Scale className="w-3.5 h-3.5" />
+              <span>Matrix</span>
               {zeroEventsCount > 0 && (
-                <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-500 font-bold border border-amber-500/30">
-                  {zeroEventsCount} unassigned
+                <span className="text-[10px] px-1.5 py-0.2 rounded-md bg-amber-500/20 text-amber-500 font-bold border border-amber-500/30">
+                  {zeroEventsCount}
                 </span>
               )}
             </button>
 
             <button
               onClick={() => setActiveTab('team')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === 'team'
                   ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
                   : isDark 
@@ -126,13 +128,13 @@ export default function Navbar({
                   : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
               }`}
             >
-              <Users className="w-4 h-4" />
-              <span>Team Roster</span>
+              <Users className="w-3.5 h-3.5" />
+              <span>Team</span>
             </button>
 
             <button
               onClick={() => setActiveTab('grading')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === 'grading'
                   ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
                   : isDark 
@@ -140,18 +142,13 @@ export default function Navbar({
                   : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
               }`}
             >
-              <Star className={`w-4 h-4 ${activeTab === 'grading' ? 'text-amber-300 fill-amber-300' : 'text-amber-400'}`} />
+              <Star className={`w-3.5 h-3.5 ${activeTab === 'grading' ? 'text-amber-300 fill-amber-300' : 'text-amber-400'}`} />
               <span>Grading</span>
-              <span className={`text-[9px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider ${
-                activeTab === 'grading' ? 'bg-black/30 text-white' : 'bg-red-500/10 text-red-400 border border-red-500/20'
-              }`}>
-                Heads
-              </span>
             </button>
 
             <button
               onClick={() => setActiveTab('activity')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === 'activity'
                   ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
                   : isDark 
@@ -159,8 +156,8 @@ export default function Navbar({
                   : 'text-zinc-600 hover:text-zinc-900 hover:bg-white'
               }`}
             >
-              <Activity className="w-4 h-4" />
-              <span>Audit Feed</span>
+              <Activity className="w-3.5 h-3.5" />
+              <span>Audit</span>
             </button>
           </nav>
 
@@ -331,48 +328,84 @@ export default function Navbar({
               }}
             />
 
-            {/* Backup Database JSON */}
-            <button
-              onClick={onDownloadBackup}
-              title="Download Complete Database Backup (JSON)"
-              className={`p-2 rounded-xl border transition ${
-                isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-emerald-400 hover:bg-zinc-800' : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-emerald-600 hover:bg-zinc-200'
-              }`}
-            >
-              <Database className="w-4 h-4" />
-            </button>
+            {/* Tools & Database Dropdown Menu */}
+            <div className="relative">
+              <button
+                onClick={() => setShowToolsMenu(!showToolsMenu)}
+                title="Database backup, CSV export, and system tools"
+                className={`p-2 rounded-xl border transition flex items-center justify-center ${
+                  showToolsMenu
+                    ? 'bg-red-600 text-white border-red-600'
+                    : isDark 
+                    ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800' 
+                    : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-200'
+                }`}
+              >
+                <SlidersHorizontal className="w-4 h-4" />
+              </button>
 
-            {/* Restore Database JSON */}
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              title="Restore Database from JSON Backup file"
-              className={`p-2 rounded-xl border transition ${
-                isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-red-400 hover:bg-zinc-800' : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:text-red-500 hover:bg-zinc-200'
-              }`}
-            >
-              <Upload className="w-4 h-4" />
-            </button>
+              {showToolsMenu && (
+                <div className={`absolute right-0 mt-2 w-56 rounded-2xl border shadow-2xl p-2 z-50 space-y-1 ${
+                  isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-200' : 'bg-white border-zinc-200 text-zinc-800'
+                }`}>
+                  <div className="px-3 py-1 text-[10px] font-bold opacity-50 uppercase tracking-wider">
+                    Data & Tools
+                  </div>
 
-            {/* Quick Export & Reset */}
-            <button
-              onClick={onExportCsv}
-              title="Export all records to CSV"
-              className={`p-2 rounded-xl border transition ${
-                isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800' : 'bg-zinc-100 border-zinc-200 text-zinc-700 hover:bg-zinc-200'
-              }`}
-            >
-              <Download className="w-4 h-4" />
-            </button>
+                  <button
+                    onClick={() => {
+                      onDownloadBackup();
+                      setShowToolsMenu(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center space-x-2.5 transition ${
+                      isDark ? 'hover:bg-zinc-800 text-zinc-200' : 'hover:bg-zinc-100 text-zinc-700'
+                    }`}
+                  >
+                    <Database className="w-4 h-4 text-emerald-400" />
+                    <span>Download JSON Backup</span>
+                  </button>
 
-            <button
-              onClick={onResetData}
-              title="Reset records to initial baseline"
-              className={`p-2 rounded-xl border transition ${
-                isDark ? 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-red-400 hover:bg-zinc-800' : 'bg-zinc-100 border-zinc-200 text-zinc-500 hover:text-red-500 hover:bg-zinc-200'
-              }`}
-            >
-              <RotateCcw className="w-4 h-4" />
-            </button>
+                  <button
+                    onClick={() => {
+                      fileInputRef.current?.click();
+                      setShowToolsMenu(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center space-x-2.5 transition ${
+                      isDark ? 'hover:bg-zinc-800 text-zinc-200' : 'hover:bg-zinc-100 text-zinc-700'
+                    }`}
+                  >
+                    <Upload className="w-4 h-4 text-blue-400" />
+                    <span>Restore from Backup</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      onExportCsv();
+                      setShowToolsMenu(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center space-x-2.5 transition ${
+                      isDark ? 'hover:bg-zinc-800 text-zinc-200' : 'hover:bg-zinc-100 text-zinc-700'
+                    }`}
+                  >
+                    <Download className="w-4 h-4 text-amber-400" />
+                    <span>Export CSV Spreadsheet</span>
+                  </button>
+
+                  <div className={`my-1 border-t ${isDark ? 'border-zinc-800' : 'border-zinc-100'}`} />
+
+                  <button
+                    onClick={() => {
+                      onResetData();
+                      setShowToolsMenu(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-xl text-xs flex items-center space-x-2.5 text-red-400 hover:bg-red-500/10 transition"
+                  >
+                    <RotateCcw className="w-4 h-4 text-red-500" />
+                    <span>Reset to Baseline</span>
+                  </button>
+                </div>
+              )}
+            </div>
 
           </div>
         </div>
@@ -407,6 +440,15 @@ export default function Navbar({
           >
             <Users className="w-4 h-4 mb-0.5" />
             Team
+          </button>
+          <button
+            onClick={() => setActiveTab('grading')}
+            className={`flex flex-col items-center py-1 text-[11px] font-medium ${
+              activeTab === 'grading' ? 'text-red-500 font-bold' : ''
+            }`}
+          >
+            <Star className="w-4 h-4 mb-0.5 text-amber-400" />
+            Grading
           </button>
           <button
             onClick={() => setActiveTab('activity')}
