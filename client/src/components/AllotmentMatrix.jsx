@@ -13,7 +13,9 @@ import {
   TrendingUp,
   ShieldAlert,
   HelpCircle,
-  ExternalLink
+  ExternalLink,
+  Trash2,
+  Edit3
 } from 'lucide-react';
 
 function parseEventDate(dateStr) {
@@ -47,6 +49,8 @@ export default function AllotmentMatrix({
   memberStats,
   onOpenNewEventWithMember,
   onToggleMemberInEvent,
+  onDeleteEvent,
+  onEditEvent,
   theme = 'dark'
 }) {
   const [roleFilter, setRoleFilter] = useState('ALL');
@@ -353,6 +357,28 @@ export default function AllotmentMatrix({
                     )}
                     <div className="text-[10px] text-red-500 font-bold mt-0.5">
                       {(evt.assignedMemberIds || []).length} assigned
+                    </div>
+                    <div className="flex items-center justify-center gap-1 mt-1 opacity-60 hover:opacity-100 transition">
+                      {onEditEvent && (
+                        <button
+                          type="button"
+                          onClick={() => onEditEvent(evt)}
+                          title={`Edit details of "${evt.name}"`}
+                          className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-white transition"
+                        >
+                          <Edit3 className="w-3 h-3" />
+                        </button>
+                      )}
+                      {onDeleteEvent && (
+                        <button
+                          type="button"
+                          onClick={() => onDeleteEvent(evt.id)}
+                          title={`Delete event "${evt.name}"`}
+                          className="p-1 rounded hover:bg-red-500/20 text-zinc-400 hover:text-red-400 transition"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      )}
                     </div>
                   </th>
                 ))}

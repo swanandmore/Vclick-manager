@@ -581,7 +581,7 @@ export default function EventList({
                             <button
                               onClick={() => onDeleteEvent(evt.id)}
                               title="Delete Event"
-                              className="p-1.5 rounded-lg opacity-60 hover:text-red-500 hover:opacity-100 transition"
+                              className="p-1.5 rounded-lg opacity-80 hover:opacity-100 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 transition"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -787,7 +787,8 @@ export default function EventList({
                       </button>
                       <button
                         onClick={() => onDeleteEvent(evt.id)}
-                        className="p-1.5 rounded-lg opacity-60 hover:text-red-500 hover:opacity-100 transition"
+                        title="Delete Event"
+                        className="p-1.5 rounded-lg opacity-80 hover:opacity-100 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 transition"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

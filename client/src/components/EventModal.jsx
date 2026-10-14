@@ -13,7 +13,8 @@ import {
   CalendarRange,
   ChevronLeft,
   ChevronRight,
-  Users
+  Users,
+  Trash2
 } from 'lucide-react';
 
 // Generate array of date strings between startDate and endDate (inclusive)
@@ -44,6 +45,7 @@ export default function EventModal({
   isOpen,
   onClose,
   onSave,
+  onDelete,
   eventToEdit,
   allMembers,
   memberStats,
@@ -683,20 +685,35 @@ export default function EventModal({
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-zinc-800">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-300 hover:bg-zinc-800 transition"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-5 py-2 rounded-xl text-xs font-bold bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 transition"
-            >
-              {eventToEdit ? 'Save Changes' : 'Create Event'}
-            </button>
+          <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
+            {eventToEdit && onDelete ? (
+              <button
+                type="button"
+                onClick={() => {
+                  onDelete(eventToEdit.id);
+                }}
+                className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-red-400 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 transition"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete Event</span>
+              </button>
+            ) : <div />}
+
+            <div className="flex items-center space-x-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-300 hover:bg-zinc-800 transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-5 py-2 rounded-xl text-xs font-bold bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 transition"
+              >
+                {eventToEdit ? 'Save Changes' : 'Create Event'}
+              </button>
+            </div>
           </div>
 
         </form>

@@ -279,13 +279,30 @@ export default function App() {
   };
 
   const handleDeleteEvent = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this event record?')) return;
+    const target = events.find(e => e.id === id);
+    const eventName = target?.name ? `"${target.name}"` : 'this event';
+    if (!window.confirm(`Are you sure you want to permanently delete ${eventName}? This will remove all crew allotments and recorded reviews for this event.`)) return;
+
+    // Optimistic UI update
+    setEvents(prev => prev.filter(e => e.id !== id));
+    setIsEventModalOpen(false);
+    setEventToEdit(null);
+
     try {
-      await fetch(getApiUrl(`/api/events/${id}?headName=${encodeURIComponent(currentHead)}`), {
+      const res = await fetch(getApiUrl(`/api/events/${id}?headName=${encodeURIComponent(currentHead)}`), {
         method: 'DELETE'
       });
+      if (res.ok) {
+        showToast(`Event ${eventName} deleted successfully`);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        showToast(data.error || 'Failed to delete event');
+        fetchInitialState();
+      }
     } catch (err) {
       console.error('Failed to delete event:', err);
+      showToast('Network error while deleting event');
+      fetchInitialState();
     }
   };
 
@@ -589,6 +606,11 @@ export default function App() {
             memberStats={memberStats}
             onOpenNewEventWithMember={handleOpenNewEventWithMember}
             onToggleMemberInEvent={handleToggleMemberInEvent}
+            onDeleteEvent={handleDeleteEvent}
+            onEditEvent={(evt) => {
+              setEventToEdit(evt);
+              setIsEventModalOpen(true);
+            }}
             theme={theme}
           />
         )}
@@ -641,6 +663,7 @@ export default function App() {
           setEventToEdit(null);
         }}
         onSave={handleSaveEvent}
+        onDelete={handleDeleteEvent}
         eventToEdit={eventToEdit}
         allMembers={members}
         memberStats={memberStats}
