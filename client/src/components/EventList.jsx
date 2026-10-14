@@ -94,9 +94,13 @@ export default function EventList({
       .filter(Boolean)
       .join('\n');
 
+    const dateLabel = evt.isMultiDay && evt.startDate && evt.endDate && evt.startDate !== evt.endDate
+      ? `${evt.startDate} to ${evt.endDate} (Multi-Day)`
+      : (evt.date || evt.startDate);
+
     const msg = `📸 *VCLICK MULTIMEDIA PROD.* 🎬\n` +
       `*EVENT ALLOTMENT: ${evt.name}*\n\n` +
-      `📅 *Date:* ${evt.date}\n` +
+      `📅 *Date:* ${dateLabel}\n` +
       `🏫 *Campus:* ${evt.campus}\n` +
       `👤 *POC:* ${evt.contactPerson || 'Club Head'}\n\n` +
       `👥 *Assigned Crew:*\n${assignedNames || '• None allotted yet'}\n\n` +
@@ -140,12 +144,14 @@ export default function EventList({
   const currentDriveEvent = events.find(e => e.id === driveModalEventId);
 
   const sortedEvents = [...filteredEvents].sort((a, b) => {
+    const dateA = a.startDate || a.date;
+    const dateB = b.startDate || b.date;
     if (sortBy === 'DATE_ASC') {
-      const diff = parseEventDate(a.date) - parseEventDate(b.date);
+      const diff = parseEventDate(dateA) - parseEventDate(dateB);
       return diff !== 0 ? diff : (a.srNo || 0) - (b.srNo || 0);
     }
     if (sortBy === 'DATE_DESC') {
-      const diff = parseEventDate(b.date) - parseEventDate(a.date);
+      const diff = parseEventDate(dateB) - parseEventDate(dateA);
       return diff !== 0 ? diff : (b.srNo || 0) - (a.srNo || 0);
     }
     if (sortBy === 'NAME') {
@@ -358,8 +364,13 @@ export default function EventList({
                         </td>
 
                         <td className="py-3.5 px-4">
-                          <div className="font-bold group-hover:text-red-500 transition">
+                          <div className="font-bold group-hover:text-red-500 transition flex items-center gap-1.5 flex-wrap">
                             {evt.name}
+                            {evt.isMultiDay && (
+                              <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 font-bold">
+                                MULTI-DAY
+                              </span>
+                            )}
                           </div>
                           <div className="flex items-center space-x-2 mt-0.5 text-[10px] opacity-60">
                             <span className="flex items-center">
@@ -399,7 +410,15 @@ export default function EventList({
                         </td>
 
                         <td className="py-3.5 px-4 font-mono font-medium whitespace-nowrap">
-                          {evt.date}
+                          {evt.isMultiDay && evt.startDate && evt.endDate && evt.startDate !== evt.endDate ? (
+                            <div>
+                              <div className="text-[10px] font-bold text-red-400 mb-0.5">Multi-Day</div>
+                              <div>{evt.startDate}</div>
+                              <div className="text-[10px] text-zinc-400">to {evt.endDate}</div>
+                            </div>
+                          ) : (
+                            evt.date
+                          )}
                         </td>
 
                         <td className="py-3.5 px-4">
@@ -617,14 +636,23 @@ export default function EventList({
                     </button>
                   </div>
 
-                  <h3 className="text-sm font-bold mb-1 group-hover:text-red-500 transition">
+                  <h3 className="text-sm font-bold mb-1 group-hover:text-red-500 transition flex items-center gap-1.5 flex-wrap">
                     {evt.name}
+                    {evt.isMultiDay && (
+                      <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 font-bold">
+                        MULTI-DAY
+                      </span>
+                    )}
                   </h3>
 
                   <div className="space-y-1.5 text-xs opacity-70 my-3">
                     <div className="flex items-center space-x-2">
                       <Clock className="w-3.5 h-3.5" />
-                      <span>{evt.date}</span>
+                      {evt.isMultiDay && evt.startDate && evt.endDate && evt.startDate !== evt.endDate ? (
+                        <span>{evt.startDate} — {evt.endDate}</span>
+                      ) : (
+                        <span>{evt.date}</span>
+                      )}
                       <span>•</span>
                       <MapPin className="w-3.5 h-3.5" />
                       <span>{evt.campus}</span>
@@ -792,7 +820,7 @@ export default function EventList({
                   <h3 className="font-bold text-sm">Edit Crew Allotment</h3>
                 </div>
                 <p className="text-xs opacity-60 mt-0.5">
-                  <span className="font-semibold text-red-500">{currentAllotmentEvent.name}</span> • {currentAllotmentEvent.date} • {currentAllotmentEvent.campus}
+                  <span className="font-semibold text-red-500">{currentAllotmentEvent.name}</span> • {currentAllotmentEvent.isMultiDay && currentAllotmentEvent.startDate && currentAllotmentEvent.endDate ? `${currentAllotmentEvent.startDate} to ${currentAllotmentEvent.endDate}` : currentAllotmentEvent.date} • {currentAllotmentEvent.campus}
                 </p>
               </div>
               <button

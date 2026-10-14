@@ -582,6 +582,11 @@ export default function GradingDashboard({
                                   <span className="text-xs font-bold text-white hover:text-red-400 transition">
                                     {event.name}
                                   </span>
+                                  {event.isMultiDay && (
+                                    <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 font-bold">
+                                      Multi-Day
+                                    </span>
+                                  )}
                                   <span className={`text-[10px] px-2 py-0.2 rounded font-semibold ${
                                     event.driveLinkSubmitted 
                                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
@@ -590,12 +595,20 @@ export default function GradingDashboard({
                                     {event.driveLinkSubmitted ? 'Drive Uploaded' : 'Drive Pending'}
                                   </span>
                                 </div>
-                                <div className="flex items-center space-x-3 text-[11px] text-zinc-400 mt-1">
-                                  <span>📅 {event.date}</span>
+                                <div className="flex flex-wrap items-center gap-2 text-[11px] text-zinc-400 mt-1">
+                                  <span>📅 {event.isMultiDay && event.startDate && event.endDate && event.startDate !== event.endDate ? `${event.startDate} to ${event.endDate}` : event.date}</span>
                                   <span>•</span>
                                   <span>🏫 {event.campus}</span>
                                   <span>•</span>
                                   <span>👤 POC: {event.contactPerson || 'General'}</span>
+                                  {event.isMultiDay && event.dailyAssignments && (
+                                    <>
+                                      <span>•</span>
+                                      <span className="text-red-400 font-medium">
+                                        Assigned: {Object.entries(event.dailyAssignments).filter(([d, ids]) => ids.includes(member.id)).map(([d]) => d).join(', ') || 'All Days'}
+                                      </span>
+                                    </>
+                                  )}
                                 </div>
                               </div>
 

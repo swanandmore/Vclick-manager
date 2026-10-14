@@ -57,7 +57,9 @@ export default function AllotmentMatrix({
 
   // Auto-arrange events chronologically by date
   const sortedEvents = [...events].sort((a, b) => {
-    const diff = parseEventDate(a.date) - parseEventDate(b.date);
+    const dateA = a.startDate || a.date;
+    const dateB = b.startDate || b.date;
+    const diff = parseEventDate(dateA) - parseEventDate(dateB);
     return diff !== 0 ? diff : (a.srNo || 0) - (b.srNo || 0);
   });
 
@@ -326,18 +328,29 @@ export default function AllotmentMatrix({
                 {sortedEvents.map((evt, i) => (
                   <th 
                     key={evt.id} 
-                    className={`py-3 px-3 text-center min-w-[130px] border-r transition ${
+                    className={`py-3 px-3 text-center min-w-[135px] border-r transition ${
                       isDark ? 'border-zinc-800 hover:bg-zinc-900' : 'border-zinc-200 hover:bg-zinc-100'
                     }`}
                   >
-                    <div className="font-bold text-xs truncate max-w-[125px]" title={evt.name}>
+                    <div className="font-bold text-xs truncate max-w-[130px]" title={evt.name}>
                       {evt.name}
                     </div>
-                    <div className="flex items-center justify-center gap-1 text-[10px] font-mono mt-0.5 opacity-70">
-                      <span>{evt.date}</span>
-                      <span>•</span>
-                      <span>{evt.campus.slice(0, 4)}</span>
-                    </div>
+                    {evt.isMultiDay && evt.startDate && evt.endDate && evt.startDate !== evt.endDate ? (
+                      <div className="flex flex-col items-center gap-0.5 mt-0.5">
+                        <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 font-bold">
+                          Multi-Day
+                        </span>
+                        <span className="text-[10px] font-mono opacity-80" title={`${evt.startDate} to ${evt.endDate}`}>
+                          {evt.startDate.slice(5)} → {evt.endDate.slice(5)}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center gap-1 text-[10px] font-mono mt-0.5 opacity-70">
+                        <span>{evt.date}</span>
+                        <span>•</span>
+                        <span>{evt.campus.slice(0, 4)}</span>
+                      </div>
+                    )}
                     <div className="text-[10px] text-red-500 font-bold mt-0.5">
                       {(evt.assignedMemberIds || []).length} assigned
                     </div>
@@ -397,6 +410,23 @@ export default function AllotmentMatrix({
                     {sortedEvents.map((evt) => {
                       const isAssigned = (evt.assignedMemberIds || []).includes(member.id);
 
+                      let multiDayInfo = null;
+                      if (evt.isMultiDay && evt.dailyAssignments && typeof evt.dailyAssignments === 'object') {
+                        const totalDays = Object.keys(evt.dailyAssignments).length;
+                        const assignedDays = Object.entries(evt.dailyAssignments).filter(([d, ids]) => ids.includes(member.id)).map(([d]) => d);
+                        multiDayInfo = {
+                          totalDays,
+                          assignedDaysCount: assignedDays.length,
+                          assignedDays
+                        };
+                      }
+
+                      const cellTitle = isAssigned
+                        ? (multiDayInfo && multiDayInfo.totalDays > 1
+                            ? `Assigned on ${multiDayInfo.assignedDaysCount} of ${multiDayInfo.totalDays} days. Click to unassign from all days.`
+                            : `Assigned: Click to remove ${member.name} from "${evt.name}"`)
+                        : `Not assigned: Click to assign ${member.name} to "${evt.name}"`;
+
                       return (
                         <td 
                           key={evt.id} 
@@ -407,11 +437,8 @@ export default function AllotmentMatrix({
                           <button
                             type="button"
                             onClick={() => onToggleMemberInEvent(evt.id, member.id)}
-                            title={isAssigned 
-                              ? `Assigned: Click to remove ${member.name} from "${evt.name}"` 
-                              : `Not assigned: Click to assign ${member.name} to "${evt.name}"`
-                            }
-                            className={`w-8 h-8 rounded-xl mx-auto flex items-center justify-center transition-all transform active:scale-90 ${
+                            title={cellTitle}
+                            className={`w-9 h-9 rounded-xl mx-auto flex flex-col items-center justify-center transition-all transform active:scale-90 relative ${
                               isAssigned
                                 ? 'bg-red-600 text-white shadow-md shadow-red-600/30 ring-2 ring-red-500/40 hover:bg-red-700'
                                 : isDark
@@ -420,7 +447,14 @@ export default function AllotmentMatrix({
                             }`}
                           >
                             {isAssigned ? (
-                              <Check className="w-4 h-4 stroke-[3]" />
+                              <>
+                                <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                {multiDayInfo && multiDayInfo.totalDays > 1 && (
+                                  <span className="text-[8px] font-mono font-bold leading-none mt-0.5 text-red-100">
+                                    {multiDayInfo.assignedDaysCount}/{multiDayInfo.totalDays}d
+                                  </span>
+                                )}
+                              </>
                             ) : (
                               <Plus className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100" />
                             )}

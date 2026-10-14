@@ -50,6 +50,14 @@ function enrichStateWithGrades(currentState) {
     if (!Array.isArray(evt.crewReviews)) {
       evt.crewReviews = [];
     }
+    // Multi-day support: keep assignedMemberIds as union of all dailyAssignments
+    if (evt.isMultiDay && evt.dailyAssignments && typeof evt.dailyAssignments === 'object') {
+      const allIds = new Set();
+      Object.values(evt.dailyAssignments).forEach(dayIds => {
+        if (Array.isArray(dayIds)) dayIds.forEach(id => allIds.add(id));
+      });
+      evt.assignedMemberIds = Array.from(allIds);
+    }
   });
 
   // Calculate event count stats
@@ -217,7 +225,16 @@ function calculateEventStats() {
   });
 
   state.events.forEach(evt => {
-    (evt.assignedMemberIds || []).forEach(mId => {
+    // For multi-day events, union of all dailyAssignments; else use assignedMemberIds
+    let ids = evt.assignedMemberIds || [];
+    if (evt.isMultiDay && evt.dailyAssignments && typeof evt.dailyAssignments === 'object') {
+      const allIds = new Set();
+      Object.values(evt.dailyAssignments).forEach(dayIds => {
+        if (Array.isArray(dayIds)) dayIds.forEach(id => allIds.add(id));
+      });
+      ids = Array.from(allIds);
+    }
+    ids.forEach(mId => {
       memberCounts[mId] = (memberCounts[mId] || 0) + 1;
     });
   });
@@ -424,6 +441,10 @@ app.post('/api/events', (req, res) => {
     emailReceived,
     communicationDetails,
     date,
+    startDate,
+    endDate,
+    isMultiDay,
+    dailyAssignments,
     campus,
     assignedMemberIds,
     driveLink,
@@ -433,8 +454,19 @@ app.post('/api/events', (req, res) => {
     headName
   } = req.body;
 
-  if (!name || !date) {
+  const effectiveDate = startDate || date;
+  if (!name || !effectiveDate) {
     return res.status(400).json({ error: 'Event name and date are required' });
+  }
+
+  // Compute union of assigned members for multi-day events
+  let finalAssignedIds = assignedMemberIds || [];
+  if (isMultiDay && dailyAssignments && typeof dailyAssignments === 'object') {
+    const allIds = new Set();
+    Object.values(dailyAssignments).forEach(dayIds => {
+      if (Array.isArray(dayIds)) dayIds.forEach(id => allIds.add(id));
+    });
+    finalAssignedIds = Array.from(allIds);
   }
 
   const newEvent = {
@@ -444,9 +476,15 @@ app.post('/api/events', (req, res) => {
     contactPerson: (contactPerson || '').trim(),
     emailReceived: Boolean(emailReceived),
     communicationDetails: (communicationDetails || '').trim(),
-    date,
+    // Single-day backward compat
+    date: effectiveDate,
+    // Multi-day fields
+    isMultiDay: Boolean(isMultiDay),
+    startDate: startDate || effectiveDate,
+    endDate: endDate || effectiveDate,
+    dailyAssignments: (isMultiDay && dailyAssignments) ? dailyAssignments : null,
     campus: campus || 'Bibwewadi',
-    assignedMemberIds: assignedMemberIds || [],
+    assignedMemberIds: finalAssignedIds,
     driveLink: (driveLink || '').trim(),
     driveLinkSubmitted: Boolean(driveLinkSubmitted),
     status: status || 'Upcoming',
@@ -458,10 +496,11 @@ app.post('/api/events', (req, res) => {
   state.events.unshift(newEvent);
   saveStore();
 
+  const dateLabel = newEvent.isMultiDay ? `${newEvent.startDate} to ${newEvent.endDate}` : newEvent.date;
   const activity = logActivity(
     headName,
     'CREATED_EVENT',
-    `Created event: "${newEvent.name}" for ${newEvent.date}`
+    `Created event: "${newEvent.name}" for ${dateLabel}`
   );
 
   broadcast({
@@ -493,6 +532,20 @@ app.put('/api/events/:id', (req, res) => {
     ...updates,
     id: existing.id
   };
+
+  // Recompute union of dailyAssignments for multi-day events
+  if (updatedEvent.isMultiDay && updatedEvent.dailyAssignments && typeof updatedEvent.dailyAssignments === 'object') {
+    const allIds = new Set();
+    Object.values(updatedEvent.dailyAssignments).forEach(dayIds => {
+      if (Array.isArray(dayIds)) dayIds.forEach(mid => allIds.add(mid));
+    });
+    updatedEvent.assignedMemberIds = Array.from(allIds);
+  }
+
+  // Ensure date alias is kept in sync with startDate for backward compat
+  if (updatedEvent.isMultiDay && updatedEvent.startDate) {
+    updatedEvent.date = updatedEvent.startDate;
+  }
 
   state.events[index] = updatedEvent;
   saveStore();
@@ -536,8 +589,20 @@ app.post('/api/events/:id/toggle-member', (req, res) => {
 
   if (isNowAssigned) {
     event.assignedMemberIds.push(memberId);
+    if (event.isMultiDay && event.dailyAssignments && typeof event.dailyAssignments === 'object') {
+      Object.keys(event.dailyAssignments).forEach(day => {
+        if (!event.dailyAssignments[day].includes(memberId)) {
+          event.dailyAssignments[day].push(memberId);
+        }
+      });
+    }
   } else {
     event.assignedMemberIds.splice(mIndex, 1);
+    if (event.isMultiDay && event.dailyAssignments && typeof event.dailyAssignments === 'object') {
+      Object.keys(event.dailyAssignments).forEach(day => {
+        event.dailyAssignments[day] = event.dailyAssignments[day].filter(id => id !== memberId);
+      });
+    }
   }
 
   saveStore();
